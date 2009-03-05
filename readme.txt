@@ -1,7 +1,7 @@
 === Subscribe to Double-Opt-In Comments ===
 Contributors: Tobiask
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3736248
-Tags: comments, subscribe, double opt in
+Tags: comments, subscribe, double opt in, kommentar, abonnieren
 Requires at least: 2.5.x
 Tested up to: 2.7.x
 Stable tag: 0.5
