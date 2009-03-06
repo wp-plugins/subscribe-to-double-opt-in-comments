@@ -148,7 +148,7 @@ class sg_subscribe_settings {
 		
 		echo '<li><label for="mail_text_head">' . __('Headline for Double-Opt-In', 'subscribe-to-doi-comments') . ' <input type="text" size="40" id="mail_text_head" name="sg_subscribe_settings[mail_text_head]" value="' . sg_subscribe_settings::form_setting('mail_text_head') . '" /></label></li>';
 		
-		echo '<li><label for="mail_text">' . __('Mail Text for Double-Opt-In ([verify_url] will be replaced with URL to subscribe finally)', 'subscribe-to-doi-comments') . '</label><br /><textarea style="width: 98%; font-size: 12px;" rows="2" cols="60" id="mail_text" name="sg_subscribe_settings[mail_text]">' . sg_subscribe_settings::textarea_setting('mail_text') . '</textarea></li>';		
+		echo '<li><label for="mail_text">' . __('Mail Text for Double-Opt-In ([verify_url] will be replaced with URL to subscribe finally, no HTML)', 'subscribe-to-doi-comments') . '</label><br /><textarea style="width: 98%; font-size: 12px;" rows="8" cols="60" id="mail_text" name="sg_subscribe_settings[mail_text]">' . sg_subscribe_settings::textarea_setting('mail_text') . '</textarea></li>';		
 
 		echo '</ul></fieldset>';
 
@@ -968,7 +968,7 @@ function sg_subscribe_admin($standalone = false) {
 	<?php
 	if(strlen($_GET['verify']) == 15){
 		$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe = 'Y' where comment_subscribe_verified = '".mysql_real_escape_string(strip_tags($_GET['verify']))."'");
-		echo '<div style="background:#00aa00;border:1px solid black;padding:5px;font-size:14pt;">Validation successful! You will now get an e-mail if a new comment is posted.</div>
+		echo '<div style="background:#00aa00;border:1px solid black;padding:5px;font-size:14pt;">E-Mail Adresse erfolgreich validiert, Sie bekommen ab jetzt eine E-Mail sobald ein neuer Kommentar gepostet wurde!<br /><br />Validation successful! You will now get an e-mail if a new comment is posted.</div>
 		</body>
 		</html>';
 		die();
