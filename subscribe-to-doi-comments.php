@@ -2,7 +2,7 @@
 /*
 Plugin Name: Subscribe To "Double-Opt-In" Comments
 Plugin URI: http://www.tobiaskoelligan.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-Version: 0.8
+Version: 0.9
 Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
 Author: Tobias Koelligan
 Author URI: http://www.tobiaskoelligan.de/
@@ -103,7 +103,7 @@ Note: this must be used within the comments loop!  It will not work properly out
 ------------------------- */
 function comment_subscription_status() {
 global $comment;
-if ($comment->comment_subscribe == 'Y') {
+if ($comment->comment_subscribe_optin == 'Y') {
 return true;
 } else {
 return false;
@@ -328,7 +328,7 @@ class sg_subscribe {
 			return $this->post_subscriptions[$postid];
 		global $wpdb;
 		$postid = (int) $postid;
-		$this->post_subscriptions[$postid] = $wpdb->get_col("SELECT comment_author_email FROM $wpdb->comments WHERE comment_post_ID = '$postid' AND comment_subscribe='Y' AND comment_author_email != '' AND comment_approved = '1' GROUP BY LCASE(comment_author_email)");
+		$this->post_subscriptions[$postid] = $wpdb->get_col("SELECT comment_author_email FROM $wpdb->comments WHERE comment_post_ID = '$postid' AND comment_subscribe_optin='Y' AND comment_author_email != '' AND comment_approved = '1' GROUP BY LCASE(comment_author_email)");
 		$subscribed_without_comment = (array) get_post_meta($postid, '_sg_subscribe-to-doi-comments');
 		$this->post_subscriptions[$postid] = array_merge((array) $this->post_subscriptions[$postid], (array) $subscribed_without_comment);
 		$this->post_subscriptions[$postid] = array_unique($this->post_subscriptions[$postid]);
@@ -344,7 +344,7 @@ class sg_subscribe {
 		global $wpdb;
 		$email = $wpdb->escape(strtolower($email));
 
-		$subscriptions = $wpdb->get_results("SELECT comment_post_ID FROM $wpdb->comments WHERE LCASE(comment_author_email) = '$email' AND comment_subscribe='Y' AND comment_approved = '1' GROUP BY comment_post_ID");
+		$subscriptions = $wpdb->get_results("SELECT comment_post_ID FROM $wpdb->comments WHERE LCASE(comment_author_email) = '$email' AND comment_subscribe_optin='Y' AND comment_approved = '1' GROUP BY comment_post_ID");
 		foreach ( (array) $subscriptions as $subscription )
 			$this->email_subscriptions[] = $subscription->comment_post_ID;
 		$subscriptions = $wpdb->get_results("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_sg_subscribe-to-doi-comments' AND LCASE(meta_value) = '$email' GROUP BY post_id");
@@ -413,21 +413,21 @@ class sg_subscribe {
 		$email_sql = $wpdb->escape($email);
 		$postid = $wpdb->get_var("SELECT comment_post_ID from $wpdb->comments WHERE comment_ID = '$cid'");
 
-		$previously_subscribed = ( $wpdb->get_var("SELECT comment_subscribe from $wpdb->comments WHERE comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email_sql' AND comment_subscribe = 'Y' LIMIT 1") || in_array($email, (array) get_post_meta($postid, '_sg_subscribe-to-doi-comments')) ) ? true : false;
+		$previously_subscribed = ( $wpdb->get_var("SELECT comment_subscribe_optin from $wpdb->comments WHERE comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email_sql' AND comment_subscribe_optin = 'Y' LIMIT 1") || in_array($email, (array) get_post_meta($postid, '_sg_subscribe-to-doi-comments')) ) ? true : false;
 
 		// If user wants to be notified or has previously subscribed, set the flag on this current comment + double opt in
 		if (($_POST['subscribe'] == 'subscribe' && is_email($email)) || $previously_subscribed) {
 			delete_post_meta($postid, '_sg_subscribe-to-doi-comments', $email);
-			$test_user_mail = $wpdb->get_row("SELECT comment_author_email FROM $wpdb->comments where LCASE(comment_author_email) = '$email' and comment_subscribe_mailed = 'Y' LIMIT 1");
+			$test_user_mail = $wpdb->get_row("SELECT comment_author_email FROM $wpdb->comments where LCASE(comment_author_email) = '$email' and comment_subscribe_optin_mailed = 'Y' LIMIT 1");
 			if($test_user_mail->comment_author_email != $email){
 				$keyvalue = substr(md5(sha1($postid).time().$email),5,15);
 				$url_sub = get_settings('home').'/?wp-subscription-manager=1&verify='.$keyvalue;
 				$this->send_mail($email,$this->mail_text_head,str_replace("[verify_url]",$url_sub,$this->mail_text));			
-				$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_verified = '$keyvalue', comment_subscribe_mailed = 'Y' where comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email'");				
+				$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin_verified = '$keyvalue', comment_subscribe_optin_mailed = 'Y' where comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email'");				
 			}else{
-				$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe = 'Y' where comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email'");				
+				$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin = 'Y' where comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email'");				
 			}
-			//$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe = 'Y' where comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email'");
+			//$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin = 'Y' where comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email'");
 		}
 		return $cid;
 	}
@@ -572,7 +572,7 @@ class sg_subscribe {
 		$email = strtolower($email);
 		$email_sql = $wpdb->escape($email);
 
-		if ( delete_post_meta($postid, '_sg_subscribe-to-doi-comments', $email) || $wpdb->query("UPDATE $wpdb->comments SET comment_subscribe = 'N' WHERE comment_post_ID  = '$postid' AND LCASE(comment_author_email) ='$email_sql'") )
+		if ( delete_post_meta($postid, '_sg_subscribe-to-doi-comments', $email) || $wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin = 'N' WHERE comment_post_ID  = '$postid' AND LCASE(comment_author_email) ='$email_sql'") )
 			return true;
 		else
 			return false;
@@ -735,15 +735,24 @@ class sg_subscribe {
 		if ( $update )
 			$this->update_settings($settings);
 
-		$column_name = 'comment_subscribe';
+		$column_name = 'comment_subscribe_optin';
 		foreach ( (array) $wpdb->get_col("DESC $wpdb->comments", 0) as $column )
 			if ($column == $column_name)
-				return true;
-
+				return true; // already installed...
+				
+		foreach ( (array) $wpdb->get_col("DESC $wpdb->comments", 0) as $column ) {
+			if ($column == 'comment_subscribe')
+				$wpdb->query("ALTER TABLE $wpdb->comments DROP `comment_subscribe`");
+			if ($column == 'comment_subscribe_verified')	
+				$wpdb->query("ALTER TABLE $wpdb->comments DROP `comment_subscribe_verified`");
+			if ($column == 'comment_subscribe_mailed')	
+				$wpdb->query("ALTER TABLE $wpdb->comments DROP `comment_subscribe_mailed`");
+		}
+			
 		// didn't find it... create it
-		$wpdb->query("ALTER TABLE $wpdb->comments ADD COLUMN comment_subscribe enum('Y','N') NOT NULL default 'N'");
-		$wpdb->query("ALTER TABLE $wpdb->comments ADD COLUMN comment_subscribe_verified char(15) NOT NULL default '000000000000000'");
-		$wpdb->query("ALTER TABLE $wpdb->comments ADD COLUMN comment_subscribe_mailed enum('Y','N') NOT NULL default 'N'");
+		$wpdb->query("ALTER TABLE $wpdb->comments ADD COLUMN comment_subscribe_optin enum('Y','N') NOT NULL default 'N'");
+		$wpdb->query("ALTER TABLE $wpdb->comments ADD COLUMN comment_subscribe_optin_verified char(15) NOT NULL default '000000000000000'");
+		$wpdb->query("ALTER TABLE $wpdb->comments ADD COLUMN comment_subscribe_optin_mailed enum('Y','N') NOT NULL default 'N'");
 	}
 
 
@@ -798,8 +807,8 @@ class sg_subscribe {
 	function on_edit($cid) {
 		global $wpdb;
 		$comment = &get_comment($cid);
-		if ( !is_email($comment->comment_author_email) && $comment->comment_subscribe == 'Y' )
-			$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe = 'N' WHERE comment_ID = '$comment->comment_ID' LIMIT 1");
+		if ( !is_email($comment->comment_author_email) && $comment->comment_subscribe_optin == 'Y' )
+			$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin = 'N' WHERE comment_ID = '$comment->comment_ID' LIMIT 1");
 		return $cid;
 	}
 
@@ -967,7 +976,7 @@ function sg_subscribe_admin($standalone = false) {
 	
 	<?php
 	if(strlen($_GET['verify']) == 15){
-		$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe = 'Y' where comment_subscribe_verified = '".mysql_real_escape_string(strip_tags($_GET['verify']))."'");
+		$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin = 'Y' where comment_subscribe_optin_verified = '".mysql_real_escape_string(strip_tags($_GET['verify']))."'");
 		echo '<div style="background:#00aa00;border:1px solid black;padding:5px;font-size:14pt;">E-Mail Adresse erfolgreich validiert, Sie bekommen ab jetzt eine E-Mail sobald ein neuer Kommentar gepostet wurde!<br /><br />Validation successful! You will now get an e-mail if a new comment is posted.</div>
 		</body>
 		</html>';
@@ -1077,7 +1086,7 @@ function sg_subscribe_admin($standalone = false) {
 
 <?php
 			$stc_limit = ( !$_REQUEST['showallsubscribers'] ) ? 'LIMIT 25' : '';
-			$all_ct_subscriptions = $wpdb->get_results("SELECT distinct LCASE(comment_author_email) as email, count(distinct comment_post_ID) as ccount FROM $wpdb->comments WHERE comment_subscribe='Y' AND comment_approved = '1' AND comment_author_email != '' GROUP BY email ORDER BY ccount DESC $stc_limit");
+			$all_ct_subscriptions = $wpdb->get_results("SELECT distinct LCASE(comment_author_email) as email, count(distinct comment_post_ID) as ccount FROM $wpdb->comments WHERE comment_subscribe_optin='Y' AND comment_approved = '1' AND comment_author_email != '' GROUP BY email ORDER BY ccount DESC $stc_limit");
 			$all_pm_subscriptions = $wpdb->get_results("SELECT distinct LCASE(meta_value) as email, count(post_id) as ccount FROM $wpdb->postmeta WHERE meta_key = '_sg_subscribe-to-doi-comments' GROUP BY email ORDER BY ccount DESC $stc_limit");
 			$all_subscriptions = array();
 
@@ -1112,7 +1121,7 @@ if ( !$_REQUEST['showallsubscribers'] ) : ?>
 ?>
 				<legend><?php _e('Top Subscribed Posts', 'subscribe-to-doi-comments'); ?></legend>
 				<?php
-				$top_subscribed_posts1 = $wpdb->get_results("SELECT distinct comment_post_ID as post_id, count(distinct comment_author_email) as ccount FROM $wpdb->comments WHERE comment_subscribe='Y' AND comment_approved = '1' GROUP BY post_id ORDER BY ccount DESC LIMIT 25");
+				$top_subscribed_posts1 = $wpdb->get_results("SELECT distinct comment_post_ID as post_id, count(distinct comment_author_email) as ccount FROM $wpdb->comments WHERE comment_subscribe_optin='Y' AND comment_approved = '1' GROUP BY post_id ORDER BY ccount DESC LIMIT 25");
 				$top_subscribed_posts2 = $wpdb->get_results("SELECT distinct post_id, count(distinct meta_value) as ccount FROM $wpdb->postmeta WHERE meta_key = '_sg_subscribe-to-doi-comments' GROUP BY post_id ORDER BY ccount DESC LIMIT 25");
 				$all_top_posts = array();
 
