@@ -2,8 +2,8 @@
 Contributors: Tobiask
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3736248
 Tags: comments, subscribe, double opt in, kommentar, abonnieren
-Requires at least: 2.5.x
-Tested up to: 2.7.x
+Requires at least: 2.5
+Tested up to: 2.7.1
 Stable tag: 0.9
 
 Based on the well known Subscribe-to-Comments PlugIn, but with double-opt-in Feature.
