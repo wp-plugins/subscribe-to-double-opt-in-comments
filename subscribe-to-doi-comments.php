@@ -2,7 +2,7 @@
 /*
 Plugin Name: Subscribe To "Double-Opt-In" Comments
 Plugin URI: http://www.tobiaskoelligan.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-Version: 1.1
+Version: 1.2
 Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
 Author: Tobias Koelligan
 Author URI: http://www.tobiaskoelligan.de/
@@ -414,12 +414,14 @@ class sg_subscribe {
 		$postid = $wpdb->get_var("SELECT comment_post_ID from $wpdb->comments WHERE comment_ID = '$cid'");
 
 		# $previously_subscribed = ( $wpdb->get_var("SELECT comment_subscribe from $wpdb->comments WHERE comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email_sql' AND comment_subscribe = 'Y' LIMIT 1") || in_array($email, (array) get_post_meta($postid, '_sg_subscribe-to-comments')) ) ? true : false;
-		$previously_subscribed = ( $wpdb->get_var("SELECT comment_subscribe_optin from $wpdb->comments WHERE comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email_sql' AND comment_subscribe_optin = 'Y' LIMIT 1") || in_array($email, (array) get_post_meta($postid, '_sg_subscribe-to-doi-comments')) ) ? true : false;
+		#$previously_subscribed = ( $wpdb->get_var("SELECT comment_subscribe_optin from $wpdb->comments WHERE comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email_sql' AND comment_subscribe_optin = 'Y' LIMIT 1") || in_array($email, (array) get_post_meta($postid, '_sg_subscribe-to-doi-comments')) ) ? true : false;
+		$previously_subscribed = ( $wpdb->get_var("SELECT comment_subscribe_optin from $wpdb->comments WHERE LCASE(comment_author_email) = '$email_sql' AND comment_subscribe_optin = 'Y' LIMIT 1") || in_array($email, (array) get_post_meta($postid, '_sg_subscribe-to-doi-comments')) ) ? true : false;
 
 		// If user wants to be notified or has previously subscribed, set the flag on this current comment + double opt in
 		if (($_POST['subscribe'] == 'subscribe' && is_email($email)) || $previously_subscribed) {
 			delete_post_meta($postid, '_sg_subscribe-to-doi-comments', $email);
 			$test_user_mail = $wpdb->get_row("SELECT comment_author_email FROM $wpdb->comments where LCASE(comment_author_email) = '$email' and comment_subscribe_optin_mailed = 'Y' LIMIT 1");
+			// Nur wenn User noch nicht bestaetigt hat...
 			if($test_user_mail->comment_author_email != $email && !$previously_subscribed){
 				$keyvalue = substr(md5(sha1($postid).time().$email),5,15);
 				$url_sub = get_settings('home').'/?wp-subscription-manager=1&verify='.$keyvalue;
@@ -429,6 +431,7 @@ class sg_subscribe {
 				$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin = 'Y' where comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email'");				
 			}
 			//$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin = 'Y' where comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email'");
+			
 		}
 		return $cid;
 	}
