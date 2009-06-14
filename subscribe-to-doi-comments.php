@@ -2,7 +2,7 @@
 /*
 Plugin Name: Subscribe To "Double-Opt-In" Comments
 Plugin URI: http://www.tobiaskoelligan.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-Version: 1.5
+Version: 1.6
 Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
 Author: Tobias Koelligan
 Author URI: http://www.tobiaskoelligan.de/
@@ -24,7 +24,7 @@ function show_subscription_checkbox ($id='0') {
 
 	<p <?php if ($sg_subscribe->clear_both) echo 'style="clear: both;" '; ?>class="subscribe-to-doi-comments">
 	<input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;" <?php if ( $checked_status ) echo 'checked="checked" '; ?>/>
-	<label for="subscribe"><?php echo $sg_subscribe->not_subscribed_text; ?></label>
+	<label for="subscribe"><?php __($sg_subscribe->not_subscribed_text); ?></label>
 	</p>
 
 <?php /* ------------------------------------------------------------------- */ ?>
@@ -36,7 +36,7 @@ function show_subscription_checkbox ($id='0') {
 <?php /* ------------------------------------------------------------- */ ?>
 
 	<p <?php if ($sg_subscribe->clear_both) echo 'style="clear: both;" '; ?>class="subscribe-to-doi-comments">
-	<?php echo str_replace('[manager_link]', $sg_subscribe->manage_link($email, true, false), $sg_subscribe->author_text); ?>
+	<?php __(str_replace('[manager_link]', $sg_subscribe->manage_link($email, true, false), $sg_subscribe->author_text)); ?>
 	</p>
 
 <?php else : ?>
@@ -46,7 +46,7 @@ function show_subscription_checkbox ($id='0') {
 <?php /* --------------------------------------------------------------- */ ?>
 
 	<p <?php if ($sg_subscribe->clear_both) echo 'style="clear: both;" '; ?>class="subscribe-to-doi-comments">
-	<?php echo str_replace('[manager_link]', $sg_subscribe->manage_link($email, true, false), $sg_subscribe->subscribed_text); ?>
+	<?php __(str_replace('[manager_link]', $sg_subscribe->manage_link($email, true, false), $sg_subscribe->subscribed_text)); ?>
 	</p>
 
 <?php /* --------------------------------------------------------------- */ ?>
@@ -140,15 +140,15 @@ class sg_subscribe_settings {
 
 		echo '<ul>';
 
-		echo '<li><label for="not_subscribed_text">' . __('Not subscribed', 'subscribe-to-doi-comments') . '</label><br /><textarea style="width: 98%; font-size: 12px;" rows="2" cols="60" id="not_subscribed_text" name="sg_subscribe_settings[not_subscribed_text]">' . __(sg_subscribe_settings::textarea_setting('not_subscribed_text')) . '</textarea></li>';
+		echo '<li><label for="not_subscribed_text">' . __('Not subscribed', 'subscribe-to-doi-comments') . '</label><br /><textarea style="width: 98%; font-size: 12px;" rows="2" cols="60" id="not_subscribed_text" name="sg_subscribe_settings[not_subscribed_text]">' . (sg_subscribe_settings::textarea_setting('not_subscribed_text')) . '</textarea></li>';
 
-		echo '<li><label for="subscribed_text">' . __('Subscribed', 'subscribe-to-doi-comments') . '</label><br /><textarea style="width: 98%; font-size: 12px;" rows="2" cols="60" id="subscribed_text" name="sg_subscribe_settings[subscribed_text]">' . __(sg_subscribe_settings::textarea_setting('subscribed_text')) . '</textarea></li>';
+		echo '<li><label for="subscribed_text">' . __('Subscribed', 'subscribe-to-doi-comments') . '</label><br /><textarea style="width: 98%; font-size: 12px;" rows="2" cols="60" id="subscribed_text" name="sg_subscribe_settings[subscribed_text]">' . (sg_subscribe_settings::textarea_setting('subscribed_text')) . '</textarea></li>';
 
-		echo '<li><label for="author_text">' . __('Entry Author', 'subscribe-to-doi-comments') . '</label><br /><textarea style="width: 98%; font-size: 12px;" rows="2" cols="60" id="author_text" name="sg_subscribe_settings[author_text]">' . __(sg_subscribe_settings::textarea_setting('author_text')) . '</textarea></li>';
+		echo '<li><label for="author_text">' . __('Entry Author', 'subscribe-to-doi-comments') . '</label><br /><textarea style="width: 98%; font-size: 12px;" rows="2" cols="60" id="author_text" name="sg_subscribe_settings[author_text]">' . (sg_subscribe_settings::textarea_setting('author_text')) . '</textarea></li>';
 		
-		echo '<li><label for="mail_text_head">' . __('Headline for Double-Opt-In', 'subscribe-to-doi-comments') . ' <input type="text" size="40" id="mail_text_head" name="sg_subscribe_settings[mail_text_head]" value="' . __(sg_subscribe_settings::form_setting('mail_text_head')) . '" /></label></li>';
+		echo '<li><label for="mail_text_head">' . __('Headline for Double-Opt-In', 'subscribe-to-doi-comments') . ' <input type="text" size="40" id="mail_text_head" name="sg_subscribe_settings[mail_text_head]" value="' . (sg_subscribe_settings::form_setting('mail_text_head')) . '" /></label></li>';
 		
-		echo '<li><label for="mail_text">' . __('Mail Text for Double-Opt-In ([verify_url] will be replaced with URL to subscribe finally, no HTML!)', 'subscribe-to-doi-comments') . '</label><br /><textarea style="width: 98%; font-size: 12px;" rows="8" cols="60" id="mail_text" name="sg_subscribe_settings[mail_text]">' . __(sg_subscribe_settings::textarea_setting('mail_text')) . '</textarea></li>';		
+		echo '<li><label for="mail_text">' . __('Mail Text for Double-Opt-In ([verify_url] will be replaced with URL to subscribe finally, no HTML!)', 'subscribe-to-doi-comments') . '</label><br /><textarea style="width: 98%; font-size: 12px;" rows="8" cols="60" id="mail_text" name="sg_subscribe_settings[mail_text]">' . (sg_subscribe_settings::textarea_setting('mail_text')) . '</textarea></li>';		
 
 		echo '</ul></fieldset>';
 
