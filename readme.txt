@@ -8,6 +8,11 @@ Stable tag: 1.7
 
 Based on the well known Subscribe-to-Comments PlugIn, but with double-opt-in Feature.
 
+== Changelog ==  
+
+= 1.7 =  
+* Bugfixing
+
 == Description ==
 
 Deutsch:
