@@ -10,6 +10,9 @@ Based on the well known Subscribe-to-Comments PlugIn, but with double-opt-in Fea
 
 == Changelog ==  
 
+= 1.8 =  
+* Some multilanguage features added
+
 = 1.7 =  
 * Bugfixing
 
