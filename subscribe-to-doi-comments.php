@@ -2,7 +2,7 @@
 /*
 Plugin Name: Subscribe To "Double-Opt-In" Comments
 Plugin URI: http://www.tobiaskoelligan.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-Version: 1.7
+Version: 1.8
 Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
 Author: Tobias Koelligan
 Author URI: http://www.tobiaskoelligan.de/
@@ -24,7 +24,7 @@ function show_subscription_checkbox ($id='0') {
 
 	<p <?php if ($sg_subscribe->clear_both) echo 'style="clear: both;" '; ?>class="subscribe-to-doi-comments">
 	<input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;" <?php if ( $checked_status ) echo 'checked="checked" '; ?>/>
-	<label for="subscribe"><?php echo $sg_subscribe->not_subscribed_text; ?></label>
+	<label for="subscribe"><?php _e($sg_subscribe->not_subscribed_text); ?></label>
 	</p>
 
 <?php /* ------------------------------------------------------------------- */ ?>
@@ -36,7 +36,7 @@ function show_subscription_checkbox ($id='0') {
 <?php /* ------------------------------------------------------------- */ ?>
 
 	<p <?php if ($sg_subscribe->clear_both) echo 'style="clear: both;" '; ?>class="subscribe-to-doi-comments">
-	<?php echo str_replace('[manager_link]', $sg_subscribe->manage_link($email, true, false), $sg_subscribe->author_text); ?>
+	<?php _e(str_replace('[manager_link]', $sg_subscribe->manage_link($email, true, false), $sg_subscribe->author_text)); ?>
 	</p>
 
 <?php else : ?>
@@ -46,7 +46,7 @@ function show_subscription_checkbox ($id='0') {
 <?php /* --------------------------------------------------------------- */ ?>
 
 	<p <?php if ($sg_subscribe->clear_both) echo 'style="clear: both;" '; ?>class="subscribe-to-doi-comments">
-	<?php echo str_replace('[manager_link]', $sg_subscribe->manage_link($email, true, false), $sg_subscribe->subscribed_text); ?>
+	<?php _e(str_replace('[manager_link]', $sg_subscribe->manage_link($email, true, false), $sg_subscribe->subscribed_text)); ?>
 	</p>
 
 <?php /* --------------------------------------------------------------- */ ?>
