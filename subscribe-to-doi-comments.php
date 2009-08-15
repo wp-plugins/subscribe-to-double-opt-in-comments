@@ -2,17 +2,26 @@
 /*
 Plugin Name: Subscribe To "Double-Opt-In" Comments
 Plugin URI: http://www.tobiaskoelligan.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-Version: 2.2
+Version: 2.3
 Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
 Author: Tobias Koelligan
 Author URI: http://www.tobiaskoelligan.de/
 */
 
+register_deactivation_hook(__FILE__, 'stc_deinstall');
+
+/**
+ * Delete options in database on deactivation of plugin
+ */
+function stc_deinstall() {
+    delete_option('sg_subscribe_settings');
+}
+
 /* This is the code that is inserted into the comment form */
 function show_subscription_checkbox ($id='0') {
 	global $sg_subscribe;
 	sg_subscribe_start();
-
+	
 	if ( $sg_subscribe->checkbox_shown ) return $id;
 	if ( !$email = $sg_subscribe->current_viewer_subscription_status() ) :
 		$checked_status = ( !empty($_COOKIE['subscribe_checkbox_'.COOKIEHASH]) && 'checked' == $_COOKIE['subscribe_checkbox_'.COOKIEHASH] ) ? true : false;
@@ -22,7 +31,7 @@ function show_subscription_checkbox ($id='0') {
 <?php /* This is the text that is displayed for users who are NOT subscribed */ ?>
 <?php /* ------------------------------------------------------------------- */ ?>
 
-	<p <?php if ($sg_subscribe->clear_both) echo 'style="clear: both;" '; ?>class="subscribe-to-doi-comments">
+	<p <?php if ( isset($sg_subscribe->clear_both) && $sg_subscribe->clear_both == "true" ) echo 'style="clear:both;" '; ?>class="subscribe-to-doi-comments">
 	<input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;" <?php if ( $checked_status ) echo 'checked="checked" '; ?>/>
 	<label for="subscribe"><?php _e($sg_subscribe->not_subscribed_text); ?></label>
 	</p>
@@ -35,7 +44,7 @@ function show_subscription_checkbox ($id='0') {
 <?php /* This is the text that is displayed for the author of the post */ ?>
 <?php /* ------------------------------------------------------------- */ ?>
 
-	<p <?php if ($sg_subscribe->clear_both) echo 'style="clear: both;" '; ?>class="subscribe-to-doi-comments">
+	<p <?php if ( isset($sg_subscribe->clear_both) && $sg_subscribe->clear_both == "true" ) echo 'style="clear:both;" '; ?>class="subscribe-to-doi-comments">
 	<?php _e(str_replace('[manager_link]', $sg_subscribe->manage_link($email, true, false), $sg_subscribe->author_text)); ?>
 	</p>
 
@@ -45,7 +54,7 @@ function show_subscription_checkbox ($id='0') {
 <?php /* This is the text that is displayed for users who ARE subscribed */ ?>
 <?php /* --------------------------------------------------------------- */ ?>
 
-	<p <?php if ($sg_subscribe->clear_both) echo 'style="clear: both;" '; ?>class="subscribe-to-doi-comments">
+	<p <?php if ( isset($sg_subscribe->clear_both) && $sg_subscribe->clear_both == "true" ) echo 'style="clear:both;" '; ?>class="subscribe-to-doi-comments">
 	<?php _e(str_replace('[manager_link]', $sg_subscribe->manage_link($email, true, false), $sg_subscribe->subscribed_text)); ?>
 	</p>
 
@@ -131,7 +140,7 @@ class sg_subscribe_settings {
 
 		echo '<li><label for="name">' . __('"From" name for notifications:', 'subscribe-to-doi-comments') . ' <input type="text" size="40" id="name" name="sg_subscribe_settings[name]" value="' . sg_subscribe_settings::form_setting('name') . '" /></label></li>';
 		echo '<li><label for="email">' . __('"From" e-mail addresss for notifications:', 'subscribe-to-doi-comments') . ' <input type="text" size="40" id="email" name="sg_subscribe_settings[email]" value="' . sg_subscribe_settings::form_setting('email') . '" /></label></li>';
-		echo '<li><label for="clear_both"><input type="checkbox" id="clear_both" name="sg_subscribe_settings[clear_both]" value="clear_both"' . sg_subscribe_settings::checkflag('clear_both') . ' /> ' . __('Do a CSS "clear" on the subscription checkbox/message (uncheck this if the checkbox/message appears in a strange location in your theme)', 'subscribe-to-doi-comments') . '</label></li>';
+		echo '<li><label for="clear_both"><input type="checkbox" id="clear_both" name="sg_subscribe_settings[clear_both]" value="true"' . sg_subscribe_settings::checkflag('clear_both') . ' /> ' . __('Do a CSS "clear" on the subscription checkbox/message (uncheck this if the checkbox/message appears in a strange location in your theme)', 'subscribe-to-doi-comments') . '</label></li>';
 		echo '</ul>';
 
 		echo '<fieldset><legend>' . __('Comment Form Text', 'subscribe-to-doi-comments') . '</legend>';
@@ -154,7 +163,7 @@ class sg_subscribe_settings {
 
 
 		echo '<fieldset>';
-		echo '<legend><input type="checkbox" id="use_custom_style" name="sg_subscribe_settings[use_custom_style]" value="use_custom_style"' . sg_subscribe_settings::checkflag('use_custom_style') . ' /> <label for="use_custom_style">' . __('Use custom style for Subscription Manager', 'subscribe-to-doi-comments') . '</label></legend>';
+		echo '<legend><input type="checkbox" id="use_custom_style" name="sg_subscribe_settings[use_custom_style]" value="true"' . sg_subscribe_settings::checkflag('use_custom_style') . ' /> <label for="use_custom_style">' . __('Use custom style for Subscription Manager', 'subscribe-to-doi-comments') . '</label></legend>';
 
 		echo '<p>' . __('These settings only matter if you are using a custom style.  <code>[theme_path]</code> will be replaced with the path to your current theme.', 'subscribe-to-doi-comments') . '</p>';
 
@@ -172,9 +181,10 @@ class sg_subscribe_settings {
 
 	function checkflag($optname) {
 		$options = get_settings('sg_subscribe_settings');
-		if ( $options[$optname] != $optname )
-			return;
-		return ' checked="checked"';
+		if ( isset($options[$optname]) && $options[$optname] == "true" ) {
+			return ' checked="checked"';
+		}
+		return '';
 	}
 
 	function form_setting($optname) {
