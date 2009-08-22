@@ -2,7 +2,7 @@
 /*
 Plugin Name: Subscribe To "Double-Opt-In" Comments
 Plugin URI: http://www.tobiaskoelligan.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-Version: 2.3
+Version: 2.4
 Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
 Author: Tobias Koelligan
 Author URI: http://www.tobiaskoelligan.de/
@@ -284,7 +284,7 @@ class sg_subscribe {
 
 	function manager_init() {
 		$this->messages = '';
-		$this->use_wp_style = ( $this->settings['use_custom_style'] == 'use_custom_style' ) ? false : true;
+		$this->use_wp_style = ( isset($this->settings['use_custom_style']) && $this->settings['use_custom_style'] == "true" ) ? false : true;
 		if ( !$this->use_wp_style ) {
 			$this->header = str_replace('[theme_path]', get_template_directory(), $this->settings['header']);
 			$this->sidebar = str_replace('[theme_path]', get_template_directory(), $this->settings['sidebar']);

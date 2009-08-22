@@ -4,11 +4,14 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: comments, subscribe, double opt in, kommentar, abonnieren
 Requires at least: 2.5
 Tested up to: 2.8.4
-Stable tag: 2.3
+Stable tag: 2.4
 
 Based on the well known Subscribe-to-Comments PlugIn, but with double-opt-in Feature.
 
 == Changelog ==  
+
+= 2.4 =
+* Fixed Custom Style for Subscription Manager Bug
 
 = 2.3 =
 * Fixed clear:both Bug
