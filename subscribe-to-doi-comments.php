@@ -2,7 +2,7 @@
 /*
 Plugin Name: Subscribe To "Double-Opt-In" Comments
 Plugin URI: http://www.tobiaskoelligan.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-Version: 2.4
+Version: 2.5
 Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
 Author: Tobias Koelligan
 Author URI: http://www.tobiaskoelligan.de/
@@ -155,6 +155,8 @@ class sg_subscribe_settings {
 
 		echo '<li><label for="author_text">' . __('Entry Author', 'subscribe-to-doi-comments') . '</label><br /><textarea style="width: 98%; font-size: 12px;" rows="2" cols="60" id="author_text" name="sg_subscribe_settings[author_text]">' . (sg_subscribe_settings::textarea_setting('author_text')) . '</textarea></li>';
 		
+		echo '<li><label for="confirmation_text">' . __('Confirmation Text (will be shown after user has clicked on the confirmation link)', 'subscribe-to-doi-comments') . '</label><br /><textarea style="width: 98%; font-size: 12px;" rows="2" cols="60" id="confirmation_text" name="sg_subscribe_settings[confirmation_text]">' . (sg_subscribe_settings::textarea_setting('confirmation_text')) . '</textarea></li>';
+		
 		echo '<li><label for="mail_text_head">' . __('Headline for Double-Opt-In', 'subscribe-to-doi-comments') . ' <input type="text" size="40" id="mail_text_head" name="sg_subscribe_settings[mail_text_head]" value="' . (sg_subscribe_settings::form_setting('mail_text_head')) . '" /></label></li>';
 		
 		echo '<li><label for="mail_text">' . __('Mail Text for Double-Opt-In ([verify_url] will be replaced with URL to subscribe finally, no HTML!)', 'subscribe-to-doi-comments') . '</label><br /><textarea style="width: 98%; font-size: 12px;" rows="8" cols="60" id="mail_text" name="sg_subscribe_settings[mail_text]">' . (sg_subscribe_settings::textarea_setting('mail_text')) . '</textarea></li>';		
@@ -275,6 +277,7 @@ class sg_subscribe {
 		$this->mail_text = $this->settings['mail_text'];
 		$this->mail_text_head = $this->settings['mail_text_head'];
 		$this->clear_both = $this->settings['clear_both'];
+		$this->confirmation_text = $this->settings['confirmation_text'];
 
 		$this->errors = '';
 		$this->post_subscriptions = array();
@@ -461,7 +464,6 @@ class sg_subscribe {
 			return true;
 		return false;
 	}
-
 
 	function add_block($email='') {
 		if ( !is_email($email) )
@@ -739,6 +741,11 @@ class sg_subscribe {
 			$settings = stripslashes_deep($settings);
 			$update = true;
 		}
+		
+		if ( !$settings['confirmation_text'] ) {
+			$settings['confirmation_text'] = 'Sie bekommen ab jetzt eine E-Mail wenn neue Kommentare geschrieben wurden.';
+			$update = true;
+		}
 
 		if ( $settings['not_subscribed_text'] == '' || $settings['subscribed_text'] == '' ) { // recover from WP 2.2/2.2.1 bug
 			delete_option('sg_subscribe_settings');
@@ -991,7 +998,7 @@ function sg_subscribe_admin($standalone = false) {
 	<?php
 	if(strlen($_GET['verify']) == 15){
 		$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin = 'Y' where comment_subscribe_optin_verified = '".mysql_real_escape_string(strip_tags($_GET['verify']))."'");
-		echo '<div style="background:#00aa00;border:1px solid black;padding:5px;font-size:14pt;">E-Mail Adresse erfolgreich validiert, Sie bekommen ab jetzt eine E-Mail sobald ein neuer Kommentar gepostet wurde!<br /><br />Validation successful! You will now get an e-mail if a new comment is posted.</div>
+		echo '<div style="background:#00aa00;border:1px solid black;padding:5px;font-size:14pt;">'.$sg_subscribe->confirmation_text.'</div>
 		</body>
 		</html>';
 		die();
