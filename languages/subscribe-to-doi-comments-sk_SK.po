@@ -245,7 +245,11 @@ msgstr ""
 
 #: subscribe-to-doi-comments.php:722
 msgid "Double Opt In"
-msgstr "Double Opt In (s potvrdením)"
+msgstr "Potvrdenie odberu komentárov"
+
+#: subscribe-to-doi-comments.php:755
+msgid "You will now get an e-mail, if a new comment is posted."
+msgstr "Odteraz dostanete e-mail vždy, keď pribudne nový komentár."
 
 #: subscribe-to-doi-comments.php:838
 msgid "Comment Subscription Manager"
@@ -258,7 +262,7 @@ msgstr "Odbery"
 
 #: subscribe-to-doi-comments.php:840
 msgid "Subscribe to Comments"
-msgstr "Prihlásiť sa ku komentárom"
+msgstr "Subscribe to Comments"
 
 #: subscribe-to-doi-comments.php:921
 msgid "You may not access this page without a valid key."
@@ -464,4 +468,3 @@ msgstr "Zmeniť e-mail  &raquo;"
 #~ "prosím kliknite sem\n"
 #~ "[verify_url]\n"
 #~ "ak chcete byť informovaný."
-
