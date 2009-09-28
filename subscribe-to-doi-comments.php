@@ -2,13 +2,22 @@
 /*
 Plugin Name: Subscribe To "Double-Opt-In" Comments
 Plugin URI: http://www.tobiaskoelligan.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-Version: 2.5
+Version: 2.7
 Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
 Author: Tobias Koelligan
 Author URI: http://www.tobiaskoelligan.de/
 */
 
 register_deactivation_hook(__FILE__, 'stc_deinstall');
+register_uninstall_hook(__FILE__, 'stc_deinstall');
+
+$plugin_dir = "subscribe-to-double-opt-in-comments";
+$locale = get_locale();
+if (!empty($locale)) {
+	$domain_str = 'subscribe-to-doi-comments';
+	$mo_file = dirname(__FILE__).'/languages/'.$domain_str.'-'.$locale.'.mo';
+	load_textdomain( $domain_str, $mo_file );
+}
 
 /**
  * Delete options in database on deactivation of plugin
@@ -219,12 +228,6 @@ class sg_subscribe_settings {
 	}
 
 }
-
-
-
-
-
-
 
 class sg_subscribe {
 	var $errors;
@@ -719,7 +722,7 @@ class sg_subscribe {
 		global $wpdb;
 
 		// add the options
-		add_option('sg_subscribe_settings', array('use_custom_style' => '', 'email' => get_bloginfo('admin_email'), 'name' => get_bloginfo('name'), 'header' => '[theme_path]/header.php', 'sidebar' => '', 'footer' => '[theme_path]/footer.php', 'before_manager' => '<div id="content" class="widecolumn subscription-manager">', 'after_manager' => '</div>', 'not_subscribed_text' => __('Notify me of followup comments via e-mail', 'subscribe-to-doi-comments'), 'subscribed_text' => __('You are subscribed to this entry.  <a href="[manager_link]">Manage your subscriptions</a>.', 'subscribe-to-doi-comments'), 'author_text' => __('You are the author of this entry.  <a href="[manager_link]">Manage subscriptions</a>.', 'subscribe-to-doi-comments'), 'mail_text' => __("Hallo,\n\nbitte klicke hier\n[verify_url]\nwenn du benachrichtigt werden möchtest.", 'subscribe-to-doi-comments'), 'mail_text_head' => __('Double Opt In', 'subscribe-to-doi-comments'), 'version' => $this->version));
+		add_option('sg_subscribe_settings', array('use_custom_style' => '', 'email' => get_bloginfo('admin_email'), 'name' => get_bloginfo('name'), 'header' => '[theme_path]/header.php', 'sidebar' => '', 'footer' => '[theme_path]/footer.php', 'before_manager' => '<div id="content" class="widecolumn subscription-manager">', 'after_manager' => '</div>', 'not_subscribed_text' => __('Notify me of followup comments via e-mail', 'subscribe-to-doi-comments'), 'subscribed_text' => __('You are subscribed to this entry.  <a href="[manager_link]">Manage your subscriptions</a>.', 'subscribe-to-doi-comments'), 'author_text' => __('You are the author of this entry.  <a href="[manager_link]">Manage subscriptions</a>.', 'subscribe-to-doi-comments'), 'mail_text' => __("Hello,\n\nplease click on the following link:\n[verify_url]\nto confirm your subscription.", 'subscribe-to-doi-comments'), 'mail_text_head' => __('Double Opt In', 'subscribe-to-doi-comments'), 'version' => $this->version));
 
 		$settings = get_option('sg_subscribe_settings');
 		if ( !$settings ) { // work around WP 2.2/2.2.1 bug
@@ -743,7 +746,7 @@ class sg_subscribe {
 		}
 		
 		if ( !$settings['confirmation_text'] ) {
-			$settings['confirmation_text'] = 'Sie bekommen ab jetzt eine E-Mail wenn neue Kommentare geschrieben wurden.';
+			$settings['confirmation_text'] = __("You will now get an e-mail, if a new comment is posted.");
 			$update = true;
 		}
 
@@ -860,7 +863,6 @@ function sg_subscribe_start() {
 	global $sg_subscribe;
 
 	if ( !$sg_subscribe ) {
-		load_plugin_textdomain('subscribe-to-doi-comments');
 		$sg_subscribe = new sg_subscribe();
 	}
 }
