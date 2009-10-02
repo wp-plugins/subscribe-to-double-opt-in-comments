@@ -10,6 +10,9 @@ Based on the well known Subscribe-to-Comments PlugIn, but with double-opt-in Fea
 
 == Changelog ==  
 
+= 2.8 =
+* Minor Bugfixes
+
 = 2.7 =
 * Added uninstall routine
 
