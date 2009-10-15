@@ -57,7 +57,7 @@ Based on the well known Subscribe-to-Comments PlugIn, but with double-opt-in Fea
 
 == Description ==
 
-<b>Deutsch:</b>
+= Deutsch =
 
 Weiterentwicklung der bekannten Version des "Subscribe to Comments" Plugins von Mark Jaquith.
 Jetzt mit Double-Opt-In Feature. Wichtig fuer deutsche Blogger. User muessen ein Abo eines Blogposts erst via E-Mail bestaetigen.
@@ -66,7 +66,7 @@ Mehr dazu auch auf <a href="http://www.sjmp.de/internet/subscribe-to-comments-mi
 
 Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch.
 
-<b>English:</b>
+= English =
 
 Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.
 Based on version 2 of "Subscribe to Comments" from Mark Jaquith (txfx.net), more information on <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
@@ -75,14 +75,14 @@ Language support: English, German, Slovak.
 
 == Installation ==
 
-Deutsch:
+= Deutsch =
 
 1. Dateien ins "/wp-content/plugins" Verzeichnis laden
 2. Im Adminbereich aktivieren
 3. Einstellungen anpassen!
 4. Fertig, jetzt freuen :)
 
-English:
+= English =
 
 1. Upload all files to the "/wp-content/plugins/" directory
 2. Activate the plugin through the "Plugins" menu in WordPress
@@ -91,8 +91,9 @@ English:
 
 == Frequently Asked Questions ==
 
-= How can I replace the checkbox? =
-Use this code within the loop in your template: <code><?php show_subscription_checkbox(); ?></code>
+= How can I change the place of the subscription checkbox? =
+
+Use this code (within the loop) in your template file, to change the place of the checkbox: <code><?php show_subscription_checkbox(); ?></code>
 
 == Screenshots ==
 
