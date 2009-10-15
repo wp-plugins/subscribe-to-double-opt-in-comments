@@ -85,7 +85,8 @@ English:
 
 == Frequently Asked Questions ==
 
-none, yet.
+= How can I replace the checkbox? =
+Use this code within the loop in your template: <code><?php show_subscription_checkbox(); ?></code>
 
 == Screenshots ==
 
