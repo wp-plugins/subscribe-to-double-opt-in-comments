@@ -4,11 +4,14 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: comments, subscribe, double opt in, kommentar, abonnieren, opt in, optin, kommentare, benachrichtigung
 Requires at least: 2.5
 Tested up to: 2.8.4
-Stable tag: 3.1
+Stable tag: 3.2
 
 Based on the well known Subscribe-to-Comments PlugIn, but with double-opt-in Feature.
 
-== Changelog ==  
+== Changelog ==
+
+= 3.2 =
+* New language added: Turkish
 
 = 3.1 =
 * Bugs fixed
@@ -64,14 +67,14 @@ Jetzt mit Double-Opt-In Feature. Wichtig fuer deutsche Blogger. User muessen ein
 Danach erhalten sie erst eine Mail falls ein neuer Kommentar gepostet wurde. 
 Mehr dazu auch auf <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
 
-Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch.
+Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch, Tuerkisch.
 
 = English =
 
 Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.
 Based on version 2 of "Subscribe to Comments" from Mark Jaquith (txfx.net), more information on <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
 
-Language support: English, German, Slovak.
+Language support: English, German, Slovak, Turkish.
 
 == Installation ==
 
