@@ -4,11 +4,14 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: comments, subscribe, double opt in, kommentar, abonnieren, opt in, optin, kommentare, benachrichtigung
 Requires at least: 2.5
 Tested up to: 2.8.4
-Stable tag: 3.2
+Stable tag: 3.3
 
 Based on the well known Subscribe-to-Comments PlugIn, but with double-opt-in Feature.
 
 == Changelog ==
+
+= 3.3 =
+* Fixed Bug: links not clickable in html mails
 
 = 3.2 =
 * New language added: Turkish

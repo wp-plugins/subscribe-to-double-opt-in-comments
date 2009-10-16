@@ -2,7 +2,7 @@
 /*
 Plugin Name: Subscribe To "Double-Opt-In" Comments
 Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-Version: 3.2
+Version: 3.3
 Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
 Author: Tobias Koelligan
 Author URI: http://www.sjmp.de/
@@ -618,14 +618,14 @@ class sg_subscribe {
 		if ( $comment->comment_approved == '1' && $comment->comment_type == '' ) {
 			// Comment has been approved and isn't a trackback or a pingback, so we should send out notifications
 
-			$message  = sprintf(__("There is a new comment on the post \"%s\"", 'subscribe-to-doi-comments') . ". \n%s\n\n", $post->post_title, get_permalink($comment->comment_post_ID));
+			$message  = sprintf(__("There is a new comment on the post \"%s\"", 'subscribe-to-doi-comments') . ". \n%s\n\n", $post->post_title, '<a href="'.get_permalink($comment->comment_post_ID).'">'.get_permalink($comment->comment_post_ID).'</a>');
 			$message .= sprintf(__("Author: %s\n", 'subscribe-to-doi-comments'), $comment->comment_author);
 			$message .= __("Comment:\n", 'subscribe-to-doi-comments') . $comment->comment_content . "\n\n";
 			$message .= __("See all comments on this post here:\n", 'subscribe-to-doi-comments');
-			$message .= get_permalink($comment->comment_post_ID) . "#comments\n\n";
+			$message .= '<a href="'.get_permalink($comment->comment_post_ID) . "#comments\">".get_permalink($comment->comment_post_ID) . "#comments</a>\n\n";
 			//add link to manage comment notifications
 			$message .= __("To manage your subscriptions or to block all notifications from this site, click the link below:\n", 'subscribe-to-doi-comments');
-			$message .= get_settings('home') . '/?wp-subscription-manager=1&email=[email]&key=[key]';
+			$message .= '<a href="'.get_settings('home') . '/?wp-subscription-manager=1&email=[email]&key=[key]">'.get_settings('home') . '/?wp-subscription-manager=1&email=[email]&key=[key]</a>';
 
 			$subject = sprintf(__('New Comment On: %s', 'subscribe-to-doi-comments'), $post->post_title);
 
