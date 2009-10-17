@@ -4,11 +4,14 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: comments, subscribe, double opt in, kommentar, abonnieren, opt in, optin, kommentare, benachrichtigung
 Requires at least: 2.5
 Tested up to: 2.8.4
-Stable tag: 3.3
+Stable tag: 3.4
 
 Based on the well known Subscribe-to-Comments PlugIn, but with double-opt-in Feature.
 
 == Changelog ==
+
+= 3.4 =
+* Danish language files added
 
 = 3.3 =
 * Fixed Bug: links not clickable in html mails
@@ -63,6 +66,13 @@ Based on the well known Subscribe-to-Comments PlugIn, but with double-opt-in Fea
 
 == Description ==
 
+= English =
+
+Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.
+Based on version 2 of "Subscribe to Comments" from Mark Jaquith (txfx.net), more information on <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
+
+Language support: English, German, Slovak, Turkish, Danish.
+
 = Deutsch =
 
 Weiterentwicklung der bekannten Version des "Subscribe to Comments" Plugins von Mark Jaquith.
@@ -70,23 +80,9 @@ Jetzt mit Double-Opt-In Feature. Wichtig fuer deutsche Blogger. User muessen ein
 Danach erhalten sie erst eine Mail falls ein neuer Kommentar gepostet wurde. 
 Mehr dazu auch auf <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
 
-Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch, Tuerkisch.
-
-= English =
-
-Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.
-Based on version 2 of "Subscribe to Comments" from Mark Jaquith (txfx.net), more information on <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
-
-Language support: English, German, Slovak, Turkish.
+Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch, Tuerkisch, Daenisch.
 
 == Installation ==
-
-= Deutsch =
-
-1. Dateien ins "/wp-content/plugins" Verzeichnis laden
-2. Im Adminbereich aktivieren
-3. Einstellungen anpassen!
-4. Fertig, jetzt freuen :)
 
 = English =
 
@@ -94,6 +90,13 @@ Language support: English, German, Slovak, Turkish.
 2. Activate the plugin through the "Plugins" menu in WordPress
 3. Set settings via "Settings" menu in WordPress!
 4. Ready, steady, go :)
+
+= Deutsch =
+
+1. Dateien ins "/wp-content/plugins" Verzeichnis laden
+2. Im Adminbereich aktivieren
+3. Einstellungen anpassen!
+4. Fertig, jetzt freuen :)
 
 == Frequently Asked Questions ==
 
