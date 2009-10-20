@@ -6,7 +6,7 @@ Requires at least: 2.5
 Tested up to: 2.8.4
 Stable tag: 3.4
 
-Based on the well known Subscribe-to-Comments PlugIn, but with double-opt-in Feature.
+Based on the well known Subscribe-to-Comments PlugIn, but now with double-opt-in feature to prevent spam.
 
 == Changelog ==
 
@@ -64,21 +64,26 @@ Based on the well known Subscribe-to-Comments PlugIn, but with double-opt-in Fea
 = 1.7 =
 * Bugfixing
 
+= 0.1 - 1.6 =
+* Added double-opt-in features and did some bugfixes etc.
+
 == Description ==
 
 = English =
 
-Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.
-Based on version 2 of "Subscribe to Comments" from Mark Jaquith (txfx.net), more information on <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
+Allows readers to receive notifications of new comments that are posted to an entry, with double-opt-in Feature. 
+First, the user will get an e-mail with a confirmation link, after the user has confirmed the subscription, he or she will be noticed about new comments. 
+Plugin based on Mark Jaquith "Subscribe to Comments".
+More information on my blog: <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
 
 Language support: English, German, Slovak, Turkish, Danish.
 
 = Deutsch =
 
 Weiterentwicklung der bekannten Version des "Subscribe to Comments" Plugins von Mark Jaquith.
-Jetzt mit Double-Opt-In Feature. Wichtig fuer deutsche Blogger. User muessen ein Abo eines Blogposts erst via E-Mail bestaetigen.
-Danach erhalten sie erst eine Mail falls ein neuer Kommentar gepostet wurde. 
-Mehr dazu auch auf <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
+Jetzt mit Double-Opt-In Feature. Wichtig f&uuml;r deutsche Blogger. User muessen ein Abo eines Blogposts erst via E-Mail bestaetigen.
+Danach erhalten sie erst eine Mail falls ein neuer Kommentar gepostet wurde. So werden Spameintragungen ausgeschlossen.
+Mehr dazu auch auf meinem Blog: <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
 
 Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch, Tuerkisch, Daenisch.
 
@@ -87,16 +92,16 @@ Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch, Tuerkisch, Daenisch.
 = English =
 
 1. Upload all files to the "/wp-content/plugins/" directory
-2. Activate the plugin through the "Plugins" menu in WordPress
-3. Set settings via "Settings" menu in WordPress!
+2. Activate the plugin through the "Plugins" menu in your WordPress Adminpanel
+3. Set settings via "Settings" menu in WordPress
 4. Ready, steady, go :)
 
 = Deutsch =
 
 1. Dateien ins "/wp-content/plugins" Verzeichnis laden
-2. Im Adminbereich aktivieren
-3. Einstellungen anpassen!
-4. Fertig, jetzt freuen :)
+2. Im Adminbereich das Plugin aktivieren
+3. Einstellungen anpassen, ebenfalls im Adminbereich!
+4. Fertig, jetzt darf man sich freuen :)
 
 == Frequently Asked Questions ==
 
