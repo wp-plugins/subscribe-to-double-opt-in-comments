@@ -3,12 +3,15 @@ Contributors: Tobiask
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3736248
 Tags: comments, subscribe, double opt in, kommentar, abonnieren, opt in, optin, kommentare, benachrichtigung
 Requires at least: 2.5
-Tested up to: 2.8.4
-Stable tag: 3.4
+Tested up to: 2.8.5
+Stable tag: 3.5
 
 Based on the well known Subscribe-to-Comments PlugIn, but now with double-opt-in feature to prevent spam.
 
 == Changelog ==
+
+= 3.5 =
+* Tested with WP 2.8.5
 
 = 3.4 =
 * Danish language files added
