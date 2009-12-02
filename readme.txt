@@ -4,11 +4,17 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: comments, subscribe, double opt in, kommentar, abonnieren, opt in, optin, kommentare, benachrichtigung
 Requires at least: 2.5
 Tested up to: 2.8.5
-Stable tag: 3.6
+Stable tag: 3.8
 
 Based on the well known Subscribe-to-Comments PlugIn, but now with double-opt-in feature to prevent spam.
 
 == Changelog ==
+
+= 3.8 =
+* Made changes for full WP 2.9 support.
+
+= 3.7 =
+* Fixed a translation bug. Added French translation files.
 
 = 3.6 =
 * Changed back to TEXT-E-Mails because of some problems, but HTML Tags will be stripped out now.
@@ -82,7 +88,7 @@ First, the user will get an e-mail with a confirmation link, after the user has 
 Plugin based on Mark Jaquith "Subscribe to Comments".
 More information on my blog: <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
 
-Language support: English, German, Slovak, Turkish, Danish.
+Language support: English, German, Slovak, Turkish, Danish, French.
 
 = Deutsch =
 
@@ -91,7 +97,7 @@ Jetzt mit Double-Opt-In Feature. Wichtig f&uuml;r deutsche Blogger. User muessen
 Danach erhalten sie erst eine Mail falls ein neuer Kommentar gepostet wurde. So werden Spameintragungen ausgeschlossen.
 Mehr dazu auch auf meinem Blog: <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
 
-Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch, Tuerkisch, Daenisch.
+Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch, Tuerkisch, Daenisch, Franzoesisch.
 
 == Installation ==
 

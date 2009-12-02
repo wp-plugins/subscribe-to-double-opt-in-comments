@@ -2,7 +2,7 @@
 /*
 Plugin Name: Subscribe To "Double-Opt-In" Comments
 Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-Version: 3.6
+Version: 3.8
 Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
 Author: Tobias Koelligan
 Author URI: http://www.sjmp.de/
@@ -1127,7 +1127,7 @@ if ( !$_REQUEST['showallsubscribers'] ) : ?>
 <?php elseif ( !$_REQUEST['showccfield'] ) : ?>
 	<p><a href="<?php echo add_query_arg('showccfield', '1'); ?>"><?php _e('Show list of subscribers in <code>CC:</code>-field format (for bulk e-mailing)', 'subscribe-to-doi-comments'); ?></a></p>
 <?php else : ?>
-	<p><a href="<?php echo attribute_escape($sg_subscribe->form_action); ?>"><?php _e('&laquo; Back to regular view'); ?></a></p>
+	<p><a href="<?php echo attribute_escape($sg_subscribe->form_action); ?>"><?php _e('&laquo; Back to regular view', 'subscribe-to-doi-comments'); ?></a></p>
 	<p><textarea cols="60" rows="10"><?php echo implode(', ', array_keys($all_subscriptions) ); ?></textarea></p>
 <?php endif;
 
