@@ -4,11 +4,14 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: comments, subscribe, double opt in, kommentar, abonnieren, opt in, optin, kommentare, benachrichtigung
 Requires at least: 2.5
 Tested up to: 2.8.5
-Stable tag: 3.8
+Stable tag: 3.9
 
 Based on the well known Subscribe-to-Comments PlugIn, but now with double-opt-in feature to prevent spam.
 
 == Changelog ==
+
+= 3.9 =
+* Added some documentation.
 
 = 3.8 =
 * Made changes for full WP 2.9 support.
@@ -120,6 +123,10 @@ Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch, Tuerkisch, Daenisch, Fr
 = How can I change the place of the subscription checkbox? =
 
 Use this code (within the loop) in your template file, to change the place of the checkbox: <code><?php show_subscription_checkbox(); ?></code>
+
+= Can people subscribe manually without commenting? =
+
+Yes, just place this code snippet in your template: <code><?php show_manual_subscription_form(); ?></code>
 
 == Screenshots ==
 
