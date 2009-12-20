@@ -2,7 +2,7 @@
 /*
 Plugin Name: Subscribe To "Double-Opt-In" Comments
 Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-Version: 4.0
+Version: 4.1
 Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
 Author: Tobias Koelligan
 Author URI: http://www.sjmp.de/
@@ -429,16 +429,14 @@ class sg_subscribe {
 		$email_sql = $wpdb->escape($email);
 		$postid = $wpdb->get_var("SELECT comment_post_ID from $wpdb->comments WHERE comment_ID = '$cid'");
 
-		#$previously_subscribed = ( $wpdb->get_var("SELECT comment_subscribe from $wpdb->comments WHERE comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email_sql' AND comment_subscribe = 'Y' LIMIT 1") || in_array($email, (array) get_post_meta($postid, '_sg_subscribe-to-comments')) ) ? true : false;
-		#$previously_subscribed = ( $wpdb->get_var("SELECT comment_subscribe_optin from $wpdb->comments WHERE comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email_sql' AND comment_subscribe_optin = 'Y' LIMIT 1") || in_array($email, (array) get_post_meta($postid, '_sg_subscribe-to-doi-comments')) ) ? true : false;
 		$previously_subscribed = ( $wpdb->get_var("SELECT comment_subscribe_optin from $wpdb->comments WHERE LCASE(comment_author_email) = '$email_sql' AND comment_subscribe_optin = 'Y' LIMIT 1") || in_array($email, (array) get_post_meta($postid, '_sg_subscribe-to-doi-comments')) ) ? true : false;
 
 		// If user wants to be notified or has previously subscribed, set the flag on this current comment + double opt in
 		if (($_POST['subscribe'] == 'subscribe' && is_email($email)) || $previously_subscribed) {
 			delete_post_meta($postid, '_sg_subscribe-to-doi-comments', $email);
-			$test_user_mail = $wpdb->get_row("SELECT comment_author_email FROM $wpdb->comments where LCASE(comment_author_email) = '$email' and comment_subscribe_optin_mailed = 'Y' LIMIT 1");
-			// Nur wenn User noch nicht bestaetigt hat...
-			if($test_user_mail->comment_author_email != $email && !$previously_subscribed){
+			$test_user_mail = $wpdb->get_row("SELECT comment_approved, comment_author_email FROM $wpdb->comments where LCASE(comment_author_email) = '$email' and comment_subscribe_optin_mailed = 'Y' LIMIT 1");
+			// Nur wenn User noch nicht bestaetigt hat und Kommentar kein Spam ist!
+			if($test_user_mail->comment_author_email != $email && !$previously_subscribed && $test_user_mail->comment_approved != 'spam'){
 				$keyvalue = substr(md5(sha1($postid).time().$email),5,15);
 				$url_sub = get_settings('home').'/?wp-subscription-manager=1&verify='.$keyvalue;
 				$this->send_mail($email,$this->mail_text_head,str_replace("[verify_url]",$url_sub,$this->mail_text));			
@@ -446,12 +444,9 @@ class sg_subscribe {
 			}else{
 				$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin = 'Y' where comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email'");				
 			}
-			//$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin = 'Y' where comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email'");
-			
 		}
 		return $cid;
 	}
-
 
 	function is_blocked($email='') {
 		global $wpdb;
@@ -998,11 +993,16 @@ function sg_subscribe_admin($standalone = false) {
 	<?php } ?>
 	
 	<?php
-	if(strlen($_GET['verify']) == 15){
-		$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin = 'Y' where comment_subscribe_optin_verified = '".mysql_real_escape_string(strip_tags($_GET['verify']))."'");
-		echo '<div style="background:#00aa00;border:1px solid black;padding:5px;font-size:14pt;">'.$sg_subscribe->confirmation_text.'</div>
-		</body>
-		</html>';
+	$verify_code = strip_tags($_GET['verify']);
+	if(strlen($verify_code) == 15){
+		$check_exists = $wpdb->get_row("SELECT comment_author_email FROM $wpdb->comments where comment_approved != 'trash' and comment_subscribe_optin_verified = '".mysql_real_escape_string($verify_code)."' LIMIT 1");
+		if(!empty($check_exists->comment_author_email)){
+			$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin = 'Y' where comment_subscribe_optin_verified = '".mysql_real_escape_string($verify_code)."'");
+			echo '<div style="background:#00aa00;border:1px solid black;padding:5px;font-size:14pt;">'.$sg_subscribe->confirmation_text.'</div>';
+		} else {
+			echo '<div style="background:red;border:1px solid black;padding:5px;font-size:14pt;">'.__('Error! Comment does not exist anymore!').'</div>';
+		}
+		echo '</body></html>';
 		die();
 	}
 	?>
