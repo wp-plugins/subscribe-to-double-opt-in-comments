@@ -27,7 +27,7 @@ msgstr "<strong>Fehler: </strong>"
 
 #: subscribe-to-doi-comments.php:94
 msgid "Subscribe without commenting"
-msgstr "Benachrichtigungsfunktion aktivieren ohne einen Kommentar zu hinterlassen"
+msgstr "Benachrichtigungsfunktion aktivieren, ohne einen Kommentar zu hinterlassen"
 
 #: subscribe-to-doi-comments.php:96
 msgid "E-Mail:"
