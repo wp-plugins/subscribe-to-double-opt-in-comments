@@ -11,7 +11,7 @@ Based on the well known Subscribe-to-Comments PlugIn, but now with double-opt-in
 == Changelog ==
 
 = 4.5 =
-* Added Belorussian.
+* Added Belorussian. Thanks to Marcis G. (http://pc.de/)
 
 = 4.4 =
 * Changed some language files, new translations needed! New .pot file is attached.
@@ -112,7 +112,7 @@ First, the user will get an e-mail with a confirmation link, after the user has 
 Plugin based on Mark Jaquith "Subscribe to Comments".
 More information on my blog: <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
 
-Language support: English, German, Slovak, Turkish, Danish, French.
+Language support: English, German, Slovak, Turkish, Danish, French, Belorussian.
 
 = Deutsch =
 
@@ -121,7 +121,7 @@ Jetzt mit Double-Opt-In Feature. Wichtig f&uuml;r deutsche Blogger. User muessen
 Danach erhalten sie erst eine Mail falls ein neuer Kommentar gepostet wurde. So werden Spameintragungen ausgeschlossen.
 Mehr dazu auch auf meinem Blog: <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
 
-Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch, Tuerkisch, Daenisch, Franzoesisch.
+Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch, Tuerkisch, Daenisch, Franzoesisch, Weiﬂrussisch.
 
 == Installation ==
 
