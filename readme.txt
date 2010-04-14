@@ -121,7 +121,7 @@ Jetzt mit Double-Opt-In Feature. Wichtig f&uuml;r deutsche Blogger. User muessen
 Danach erhalten sie erst eine Mail falls ein neuer Kommentar gepostet wurde. So werden Spameintragungen ausgeschlossen.
 Mehr dazu auch auf meinem Blog: <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
 
-Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch, Tuerkisch, Daenisch, Franzoesisch, Weiﬂrussisch.
+Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch, Tuerkisch, Daenisch, Franzoesisch, Wei&szlig;russisch.
 
 == Installation ==
 
