@@ -267,7 +267,7 @@ msgstr "Subscribe to DOI Comments"
 
 #: subscribe-to-doi-comments.php:920
 msgid "You may not access this page without a valid key."
-msgstr "Du kannst diese Seite nur mit einem validen Key betretten."
+msgstr "Du kannst diese Seite nur mit einem validen Key betreten."
 
 #: subscribe-to-doi-comments.php:928
 #, php-format
