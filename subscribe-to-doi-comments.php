@@ -2,7 +2,7 @@
 /*
 Plugin Name: Subscribe To "Double-Opt-In" Comments
 Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-Version: 5.3
+Version: 5.4
 Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
 Author: Tobias Koelligan
 Author URI: http://www.sjmp.de/
@@ -98,7 +98,7 @@ if ( !$sg_subscribe->current_viewer_subscription_status() ) :
 	<form action="" method="post">
 	<input type="hidden" name="solo-comment-subscribe" value="solo-comment-subscribe" />
 	<input type="hidden" name="postid" value="<?php echo (int) $id; ?>" />
-	<input type="hidden" name="ref" value="<?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . attribute_escape($_SERVER['REQUEST_URI'])); ?>" />
+	<input type="hidden" name="ref" value="<?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . esc_attr($_SERVER['REQUEST_URI'])); ?>" />
 
 	<p class="solo-subscribe-to-doi-comments">
 	<?php echo $sg_subscribe->withoutCom_text; ?>
@@ -203,7 +203,7 @@ class sg_subscribe_settings {
 
 	function form_setting($optname) {
 		$options = get_settings('sg_subscribe_settings');
-		return attribute_escape($options[$optname]);
+		return esc_attr($options[$optname]);
 	}
 
 	function textarea_setting($optname) {
@@ -304,7 +304,7 @@ class sg_subscribe {
 
 		foreach ( array('email', 'key', 'ref', 'new_email') as $var )
 			if ( isset($_REQUEST[$var]) && !empty($_REQUEST[$var]) )
-				$this->{$var} = attribute_escape(trim(stripslashes($_REQUEST[$var])));
+				$this->{$var} = esc_attr(trim(stripslashes($_REQUEST[$var])));
 		if ( !$this->key )
 			$this->key = 'unset';
 	}
@@ -816,7 +816,7 @@ class sg_subscribe {
 			$link = add_query_arg('email', urlencode($email), $link);
 			$link = add_query_arg('key', $this->generate_key($email), $link);
 		}
-		$link = add_query_arg('ref', rawurlencode('http://' . $_SERVER['HTTP_HOST'] . attribute_escape($_SERVER['REQUEST_URI'])), $link);
+		$link = add_query_arg('ref', rawurlencode('http://' . $_SERVER['HTTP_HOST'] . esc_attr($_SERVER['REQUEST_URI'])), $link);
 		//$link = str_replace('+', '%2B', $link);
 		if ( $html )
 			$link = htmlentities($link);
@@ -1126,11 +1126,11 @@ function sg_subscribe_admin($standalone = false) {
 			}
 
 if ( !$_REQUEST['showallsubscribers'] ) : ?>
-	<p><a href="<?php echo attribute_escape(add_query_arg('showallsubscribers', '1', $sg_subscribe->form_action)); ?>"><?php _e('Show all subscribers', 'subscribe-to-doi-comments'); ?></a></p>
+	<p><a href="<?php echo esc_attr(add_query_arg('showallsubscribers', '1', $sg_subscribe->form_action)); ?>"><?php _e('Show all subscribers', 'subscribe-to-doi-comments'); ?></a></p>
 <?php elseif ( !$_REQUEST['showccfield'] ) : ?>
 	<p><a href="<?php echo add_query_arg('showccfield', '1'); ?>"><?php _e('Show list of subscribers in <code>CC:</code>-field format (for bulk e-mailing)', 'subscribe-to-doi-comments'); ?></a></p>
 <?php else : ?>
-	<p><a href="<?php echo attribute_escape($sg_subscribe->form_action); ?>"><?php _e('&laquo; Back to regular view', 'subscribe-to-doi-comments'); ?></a></p>
+	<p><a href="<?php echo esc_attr($sg_subscribe->form_action); ?>"><?php _e('&laquo; Back to regular view', 'subscribe-to-doi-comments'); ?></a></p>
 	<p><textarea cols="60" rows="10"><?php echo implode(', ', array_keys($all_subscriptions) ); ?></textarea></p>
 <?php endif;
 
@@ -1140,7 +1140,7 @@ if ( !$_REQUEST['showallsubscribers'] ) : ?>
 					echo "<ul>\n";
 					foreach ( (array) $all_subscriptions as $email => $ccount ) {
 						$enc_email = urlencode($email);
-						echo "<li>($ccount) <a href='" . attribute_escape($sg_subscribe->form_action . "&email=$enc_email") . "'>" . wp_specialchars($email) . "</a></li>\n";
+						echo "<li>($ccount) <a href='" . esc_attr($sg_subscribe->form_action . "&email=$enc_email") . "'>" . wp_specialchars($email) . "</a></li>\n";
 					}
 					echo "</ul>\n";
 				}
