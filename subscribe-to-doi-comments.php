@@ -2,7 +2,7 @@
 /*
 Plugin Name: Subscribe To "Double-Opt-In" Comments
 Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-Version: 5.4
+Version: 5.5
 Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
 Author: Tobias Koelligan
 Author URI: http://www.sjmp.de/
@@ -440,7 +440,7 @@ class sg_subscribe {
 			$test_user_mail = $wpdb->get_row("SELECT comment_approved, comment_author_email FROM $wpdb->comments where LCASE(comment_author_email) = '$email' and comment_subscribe_optin_mailed = 'Y' LIMIT 1");
 			// Nur wenn User noch nicht bestaetigt hat und Kommentar kein Spam ist!
 			if($test_user_mail->comment_author_email != $email && !$previously_subscribed && $test_user_mail->comment_approved != 'spam'){
-				$keyvalue = substr(md5(sha1($postid).time().$email),5,15);
+				$keyvalue = substr(md5(sha1($postid).time().rand().$email),5,15);
 				$url_sub = get_settings('home').'/?wp-subscription-manager=1&verify='.$keyvalue;
 				$this->send_mail($email,$this->mail_text_head,str_replace("[verify_url]",$url_sub,$this->mail_text));			
 				$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin_verified = '$keyvalue', comment_subscribe_optin_mailed = 'Y' where comment_post_ID = '$postid' AND LCASE(comment_author_email) = '$email'");				
