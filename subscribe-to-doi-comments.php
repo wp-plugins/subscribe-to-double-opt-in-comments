@@ -2,7 +2,7 @@
   /*
    Plugin Name: Subscribe To "Double-Opt-In" Comments
    Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-   Version: 5.6
+   Version: 5.7
    Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
    Author: Tobias Koelligan
    Author URI: http://www.sjmp.de/
@@ -484,14 +484,13 @@
               $this->add_error(__('You appear to be already subscribed to this entry.', 'subscribe-to-doi-comments'), 'solo_subscribe');
           
           if (!is_array($this->errors['solo_subscribe'])) {
-			  // send mail for double opt in feature
               $keyvalue = substr(md5(sha1($postid) . time() . mt_rand() . $email), 5, 15);
               $withoutToken = substr((sha1($postid) . time() . mt_rand() . $email), 0, 5) . substr(md5(mt_rand()), 0, 5);
 			  setcookie('comment_withoutCommentToken_' . COOKIEHASH, $withoutToken, time() + 259200, COOKIEPATH); // cookie for 3 days
               $url_sub = get_settings('home') . '/?wp-subscription-manager=1&cm=' . base64_encode($email) . '&pid=' . $postid . '&withoutCommentToken=' . $withoutToken . '&verify=' . $keyvalue;
               $this->send_mail($email, $this->mail_text_head, str_replace("[verify_url]", $url_sub, $this->mail_text));
               setcookie('comment_author_email_' . COOKIEHASH, $email, time() + 30000000, COOKIEPATH);
-              $location = $this->manage_link($email, false, false) . '&subscribeid=' . $postid;
+              $location = $this->manage_link($email, false, false) . '&userSubscribeWithoutComment=true&subscribeid=' . $postid;
               header("Location: $location");
               exit();
           }
@@ -1089,6 +1088,10 @@
 ?>
   
   <?php
+			  if ($_GET['userSubscribeWithoutComment'] == "true") {
+				echo __('You will get an e-mail to verify your subscription. Please follow the steps described within this e-mail.');
+			  }
+
               $verify_code = strip_tags($_GET['verify']);
               $pid = strip_tags($_GET['pid']);
               $cm = strip_tags($_GET['cm']);
@@ -1104,13 +1107,15 @@
                   }
                   echo '</body></html>';
                   die();
-              } elseif (strlen($verify_code) == 15 && $withoutCommentToken == $withoutCommentTokenCookie) {
-				  add_post_meta($pid, '_sg_subscribe-to-doi-comments', base64_decode($cm));
-				  echo '<div class="verify_succeeded">' . $sg_subscribe->confirmation_text . '</div>';
-				  setcookie('comment_withoutCommentToken_' . COOKIEHASH, '', time() - 3600, COOKIEPATH); // cookie löschen
-			  } else {
-                  echo '<div class="verify_failed">' . __('Error! Comment does not exist anymore!') . '</div>';
-              }
+              } elseif (strlen($verify_code) == 15 && isset($withoutCommentToken)) {
+				  if ($withoutCommentTokenCookie == $withoutCommentToken) {
+					add_post_meta($pid, '_sg_subscribe-to-doi-comments', base64_decode($cm));
+					echo '<div class="verify_succeeded">' . $sg_subscribe->confirmation_text . '</div>';
+					setcookie('comment_withoutCommentToken_' . COOKIEHASH, '', time() - 3600, COOKIEPATH); // delete cookie
+				  } else {
+					echo '<div class="verify_failed">' . __('Error! Wrong security token submitted, please use the same browser and allow cookies!') . '</div>';
+				  }
+			  }
 ?>
 
 

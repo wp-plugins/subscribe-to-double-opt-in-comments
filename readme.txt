@@ -4,11 +4,14 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: comments, subscribe, double opt in, kommentar, abonnieren, opt in, optin, kommentare, benachrichtigung
 Requires at least: 2.5
 Tested up to: 3.0.4
-Stable tag: 5.6
+Stable tag: 5.7
 
 Based on the well known Subscribe-to-Comments PlugIn, but now with double-opt-in feature to prevent spam.
 
 == Changelog ==
+
+= 5.7 =
+* Minor bug fixes
 
 = 5.6 =
 * New css class to style the Verify-Page: verify_succeeded and verify_failed
