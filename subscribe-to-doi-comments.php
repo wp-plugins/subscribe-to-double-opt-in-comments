@@ -2,7 +2,7 @@
   /*
    Plugin Name: Subscribe To "Double-Opt-In" Comments
    Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-   Version: 5.8
+   Version: 5.9
    Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
    Author: Tobias Koelligan
    Author URI: http://www.sjmp.de/
@@ -244,7 +244,6 @@
           echo '<li><label for="mail_text">' . __('Mail Text for Double-Opt-In ([verify_url] will be replaced with URL to subscribe finally, no HTML!)', 'subscribe-to-doi-comments') . '</label><br /><textarea style="width: 98%; font-size: 12px;" rows="8" cols="60" id="mail_text" name="sg_subscribe_settings[mail_text]">' . (sg_subscribe_settings::textarea_setting('mail_text')) . '</textarea></li>';
           
           echo '</ul></fieldset>';
-          
           
           echo '<fieldset>';
           echo '<legend><input type="checkbox" id="use_custom_style" name="sg_subscribe_settings[use_custom_style]" value="true"' . sg_subscribe_settings::checkflag('use_custom_style') . ' /> <label for="use_custom_style">' . __('Use custom style for Subscription Manager', 'subscribe-to-doi-comments') . '</label></legend>';
@@ -746,7 +745,8 @@
           
           
           function send_mail($to, $subject, $message) {
-              $subject = '[' . get_bloginfo('name') . '] ' . $subject;
+              // $subject = '[' . get_bloginfo('name') . '] ' . $subject;
+			  $subject = '[' . html_entity_decode(get_bloginfo('name'), ENT_COMPAT, "UTF-8") . '] ' . $subject;
               
               // strip out some chars that might cause issues, and assemble vars
               $site_name = str_replace('"', "'", $this->site_name);
