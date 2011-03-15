@@ -2,7 +2,7 @@
   /*
    Plugin Name: Subscribe To "Double-Opt-In" Comments
    Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-   Version: 5.9
+   Version: 6.0
    Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
    Author: Tobias Koelligan
    Author URI: http://www.sjmp.de/
@@ -667,20 +667,22 @@
           $email = strtolower($email);
           $email_sql = $wpdb->escape($email);
           
-          if (delete_post_meta($postid, '_sg_subscribe-to-doi-comments', $email) || $wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin = 'N' WHERE comment_post_ID  = '$postid' AND LCASE(comment_author_email) ='$email_sql'"))
+          if ($wpdb->query("UPDATE ".$wpdb->comments." SET comment_subscribe_optin = 'N', comment_subscribe_optin_verified = '000000000000000', comment_subscribe_optin_mailed = 'N', comment_subscribe = 'N', comment_subscribe_verified = '000000000000000', comment_subscribe_mailed ='N' WHERE comment_post_ID  = ".$postid." AND LCASE(comment_author_email) = '".$email_sql."'")) {
+			  delete_post_meta($postid, '_sg_subscribe-to-doi-comments', $email);
               return true;
-          else
+          } else {
               return false;
+		  }
       }
       
       
       function remove_subscriptions($postids) {
           global $wpdb;
           $removed = 0;
-          for ($i = 0; $i < count($postids); $i++) {
-              if ($this->remove_subscriber($this->email, $postids[$i]))
-                  $removed++;
-          }
+		  foreach ($postids as $pppid) {
+			$this->remove_subscriber($this->email, $pppid);
+			$removed++;
+		  }
           return $removed;
       }
       
@@ -989,10 +991,7 @@
               $sg_subscribe->standalone = true;
               ob_start(create_function('$a', 'return str_replace("<title>", "<title> " . __("Subscription Manager", "subscribe-to-doi-comments") . " &raquo; ", $a);'));
           } else {
-              //if($wp_version != "2.7")
-              $sg_subscribe->form_action = 'edit.php?page=stc-management';
-              //else
-              //$sg_subscribe->form_action = 'tools.php?page=stc-management';
+              $sg_subscribe->form_action = 'tools.php?page=stc-management';
               $sg_subscribe->standalone = false;
           }
           
@@ -1018,7 +1017,7 @@
           break;
           
           case "remove_subscriptions":
-              $postsremoved = $sg_subscribe->remove_subscriptions($_POST['subscrips']);
+			  $postsremoved = $sg_subscribe->remove_subscriptions($_POST['subscrips']);
               if ($postsremoved > 0)
                   $sg_subscribe->add_message(sprintf(__('<strong>%1$s</strong> %2$s removed successfully.', 'subscribe-to-doi-comments'), $postsremoved, ($postsremoved != 1) ? __('subscriptions', 'subscribe-to-doi-comments') : __('subscription', 'subscribe-to-doi-comments')));
               break;
