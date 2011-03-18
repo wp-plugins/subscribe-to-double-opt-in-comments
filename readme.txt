@@ -10,7 +10,7 @@ Based on the well known Subscribe-to-Comments PlugIn, but now with double-opt-in
 
 == Changelog ==
 
-= 5.9 =
+= 6.0 =
 * Fixed Bugfix within deletion of subscriptions
 
 = 5.9 =
