@@ -2,7 +2,7 @@
   /*
    Plugin Name: Subscribe To "Double-Opt-In" Comments
    Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-   Version: 6.0
+   Version: 6.0.1
    Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
    Author: Tobias Koelligan
    Author URI: http://www.sjmp.de/
@@ -16,7 +16,6 @@
   if (!empty($locale)) {
       $domain_str = 'subscribe-to-doi-comments';
       $mo_file = dirname(__FILE__) . '/languages/' . $domain_str . '-' . $locale . '.mo';
-      // load_textdomain( $domain_str, $mo_file );
       load_plugin_textdomain($domain_str, false, dirname(plugin_basename(__FILE__)) . '/languages');
   }
   
@@ -667,7 +666,7 @@
           $email = strtolower($email);
           $email_sql = $wpdb->escape($email);
           
-          if ($wpdb->query("UPDATE ".$wpdb->comments." SET comment_subscribe_optin = 'N', comment_subscribe_optin_verified = '000000000000000', comment_subscribe_optin_mailed = 'N', comment_subscribe = 'N', comment_subscribe_verified = '000000000000000', comment_subscribe_mailed ='N' WHERE comment_post_ID  = ".$postid." AND LCASE(comment_author_email) = '".$email_sql."'")) {
+          if ($wpdb->query("UPDATE ".$wpdb->comments." SET comment_subscribe_optin = 'N', comment_subscribe_optin_verified = '000000000000000', comment_subscribe_optin_mailed = 'N' WHERE comment_post_ID  = ".$postid." AND LCASE(comment_author_email) = '".$email_sql."'")) {
 			  delete_post_meta($postid, '_sg_subscribe-to-doi-comments', $email);
               return true;
           } else {
@@ -680,8 +679,9 @@
           global $wpdb;
           $removed = 0;
 		  foreach ($postids as $pppid) {
-			$this->remove_subscriber($this->email, $pppid);
-			$removed++;
+			if ($this->remove_subscriber($this->email, $pppid)) {
+				$removed++;
+			}
 		  }
           return $removed;
       }
@@ -747,7 +747,6 @@
           
           
           function send_mail($to, $subject, $message) {
-              // $subject = '[' . get_bloginfo('name') . '] ' . $subject;
 			  $subject = '[' . html_entity_decode(get_bloginfo('name'), ENT_COMPAT, "UTF-8") . '] ' . $subject;
               
               // strip out some chars that might cause issues, and assemble vars
@@ -1130,7 +1129,7 @@
   <div class="wrap">
   <h2><?php
               printf(__('%s Comment Subscription Manager', 'subscribe-to-doi-comments'), bloginfo('name'));
-?></h2>
+?> (Plugin by <a href="http://www.sjmp.de/" target="_blank">sjmp.de</a>)</h2>
 
   <?php
               if (!empty($sg_subscribe->ref))
