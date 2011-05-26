@@ -3,12 +3,16 @@ Contributors: Tobiask
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3736248
 Tags: comments, subscribe, double opt in, kommentar, abonnieren, opt in, optin, kommentare, benachrichtigung
 Requires at least: 2.7
-Tested up to: 3.1
-Stable tag: 6.0.1
+Tested up to: 3.1.3
+Stable tag: 6.0.2
 
 Based on the well known Subscribe-to-Comments PlugIn, but now with double-opt-in feature to prevent spam.
 
 == Changelog ==
+
+= 6.0.2 =
+* Added support for Portuguese (Brazilian) [thanks to Leandro]
+* 3.1.3 compatible
 
 = 6.0.1 =
 * Fixed minor bugs
@@ -36,55 +40,6 @@ Based on the well known Subscribe-to-Comments PlugIn, but now with double-opt-in
 * Checked 3.0.4 compatibility
 * Bugfix with standalone subscribe
 
-= 5.4 =
-* Checked 3.0.2 compatibility
-
-= 5.3 =
-* Arabic language support added
-
-= 5.2 =
-* Hebrew language support added
-
-= 5.1 =
-* Minor Bugfix in l10n.
-
-= 5.0 =
-* Added Italian language support
-
-= 4.9 =
-* Checked 3.0.1 compatibility
-* Added Ukrainian language support
-
-= 4.8 =
-* Checked 3.0 compatibility
-
-= 4.7 =
-* Added Spanish (Argentina). Thanks to Luis P. (http://ktulu.com.ar/blog/)
-
-= 4.6 =
-* Minor Bugfixes.
-
-= 4.5 =
-* Added Belorussian. Thanks to Marcis G. (http://pc.de/)
-
-= 4.4 =
-* Changed some language files, new translations needed! New .pot file is attached.
-
-= 4.3 =
-* Changed FAQ
-* Changed Settings Title
-
-= 4.2 =
-* Added Russian language support.
-
-= 4.1 =
-* Stable and working with WP 2.9.
-* No e-mail on spam comments anymore.
-* Check if comment exists on confirmation, error message if not.
-
-= 4.0 =
-* Added more documentation. ;)
-
 == Description ==
 
 = English =
@@ -94,16 +49,16 @@ First, the user will get an e-mail with a confirmation link, after the user has 
 Plugin based on Mark Jaquith "Subscribe to Comments".
 More information on my blog: <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
 
-Language support: English, German, Slovak, Turkish, Danish, French, Belorussian, Spanish (Argentina), Ukrainian, Italian, Hebrew, Arabic.
+Language support: English, German, Slovak, Turkish, Danish, French, Belorussian, Spanish (Argentina), Ukrainian, Italian, Hebrew, Arabic, Portuguese (Brazilian).
 
 = Deutsch =
 
 Weiterentwicklung der bekannten Version des "Subscribe to Comments" Plugins von Mark Jaquith.
-Jetzt mit Double-Opt-In Feature. Wichtig f&uuml;r deutsche Blogger. User muessen ein Abo eines Blogposts erst via E-Mail bestaetigen.
+Jetzt mit Double-Opt-In Feature. Wichtig f&uuml;r deutsche Blogger. User m&uuml;ssen ein Abo eines Blogposts erst via E-Mail bestaetigen.
 Danach erhalten sie erst eine Mail falls ein neuer Kommentar gepostet wurde. So werden Spameintragungen ausgeschlossen.
 Mehr dazu auch auf meinem Blog: <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
 
-Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch, T&uuml;rkisch, D&auml;nisch, Franz&ouml;sisch, Wei&szlig;russisch, Spanisch (Argentinien), Ukrainisch, Italienisch, Hebr&auml;isch, Arabisch.
+Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch, T&uuml;rkisch, D&auml;nisch, Franz&ouml;sisch, Wei&szlig;russisch, Spanisch (Argentinien), Ukrainisch, Italienisch, Hebr&auml;isch, Arabisch, Portugiesisch (Brasilien).
 
 == Installation ==
 
