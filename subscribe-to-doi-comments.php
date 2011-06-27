@@ -2,7 +2,7 @@
   /*
    Plugin Name: Subscribe To "Double-Opt-In" Comments
    Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-   Version: 6.0.2
+   Version: 6.0.3
    Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
    Author: Tobias Koelligan
    Author URI: http://www.sjmp.de/
@@ -1096,15 +1096,22 @@
 			  $withoutCommentToken = strip_tags($_GET['withoutCommentToken']);
 			  $withoutCommentTokenCookie = strip_tags($_COOKIE['comment_withoutCommentToken_' . COOKIEHASH]);
               if (strlen($verify_code) == 15 && empty($withoutCommentToken)) {
-                  $check_exists = $wpdb->get_row("SELECT comment_author_email FROM $wpdb->comments where comment_approved != 'trash' and comment_subscribe_optin_verified = '" . mysql_real_escape_string($verify_code) . "' LIMIT 1");
-                  if (!empty($check_exists->comment_author_email)) {
-                      $wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin = 'Y' where comment_subscribe_optin_verified = '" . mysql_real_escape_string($verify_code) . "'");
-                      echo '<div class="verify_succeeded">' . $sg_subscribe->confirmation_text . '</div>';
-                  } else {
-                      echo '<div class="verify_failed">' . __('Error! Comment does not exist anymore!') . '</div>';
-                  }
-                  echo '</body></html>';
-                  die();
+					$check_exists = $wpdb->get_row("SELECT comment_author_email FROM $wpdb->comments where comment_approved != 'trash' and comment_subscribe_optin_verified = '" . mysql_real_escape_string($verify_code) . "' LIMIT 1");
+					if (!empty($check_exists->comment_author_email)) {
+						$wpdb->query("UPDATE $wpdb->comments SET comment_subscribe_optin = 'Y' where comment_subscribe_optin_verified = '" . mysql_real_escape_string($verify_code) . "'");
+						echo '<div class="verify_succeeded">' . $sg_subscribe->confirmation_text . '</div>';
+					} else {
+						echo '<div class="verify_failed">' . __('Error! Comment does not exist anymore!') . '</div>';
+					}
+					if (!$sg_subscribe->use_wp_style) {
+						echo $sg_subscribe->after_manager;
+						if (!empty($sg_subscribe->sidebar)) 
+							@include_once($sg_subscribe->sidebar);
+						if (!empty($sg_subscribe->footer)) 
+							@include_once($sg_subscribe->footer);
+					} else {
+						echo '</body></html>';
+					}
               } elseif (strlen($verify_code) == 15 && isset($withoutCommentToken)) {
 				  if ($withoutCommentTokenCookie == $withoutCommentToken) {
 					add_post_meta($pid, '_sg_subscribe-to-doi-comments', base64_decode($cm));
