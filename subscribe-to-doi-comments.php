@@ -2,7 +2,7 @@
   /*
    Plugin Name: Subscribe To "Double-Opt-In" Comments
    Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-   Version: 6.0.3
+   Version: 6.0.4
    Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
    Author: Tobias Koelligan
    Author URI: http://www.sjmp.de/
@@ -1084,6 +1084,25 @@
   <?php
               }
 ?>
+
+  <div class="wrap">
+  <h2><?php
+              printf(__('%s Comment Subscription Manager', 'subscribe-to-doi-comments'), bloginfo('name'));
+?> (Plugin by <a href="http://www.sjmp.de/" target="_blank">sjmp.de</a>)</h2>
+
+  <?php
+              if (!empty($sg_subscribe->ref))
+                  :
+?>
+  <?php
+                  $sg_subscribe->add_message(sprintf(__('Return to the page you were viewing: %s', 'subscribe-to-doi-comments'), $sg_subscribe->entry_link(url_to_postid($sg_subscribe->ref), $sg_subscribe->ref)));
+?>
+  <?php
+              $sg_subscribe->show_messages();
+?>
+  <?php
+              endif;
+?>
   
   <?php
 			  if ($_GET['userSubscribeWithoutComment'] == "true") {
@@ -1110,7 +1129,8 @@
 						if (!empty($sg_subscribe->footer)) 
 							@include_once($sg_subscribe->footer);
 					} else {
-						echo '</body></html>';
+						echo '</div></body></html>';
+						die();
 					}
               } elseif (strlen($verify_code) == 15 && isset($withoutCommentToken)) {
 				  if ($withoutCommentTokenCookie == $withoutCommentToken) {
@@ -1131,28 +1151,6 @@
   <?php
               $sg_subscribe->show_errors();
 ?>
-
-
-  <div class="wrap">
-  <h2><?php
-              printf(__('%s Comment Subscription Manager', 'subscribe-to-doi-comments'), bloginfo('name'));
-?> (Plugin by <a href="http://www.sjmp.de/" target="_blank">sjmp.de</a>)</h2>
-
-  <?php
-              if (!empty($sg_subscribe->ref))
-                  :
-?>
-  <?php
-                  $sg_subscribe->add_message(sprintf(__('Return to the page you were viewing: %s', 'subscribe-to-doi-comments'), $sg_subscribe->entry_link(url_to_postid($sg_subscribe->ref), $sg_subscribe->ref)));
-?>
-  <?php
-              $sg_subscribe->show_messages();
-?>
-  <?php
-              endif;
-?>
-
-
 
   <?php
               if ($sg_subscribe->is_blocked()) {
