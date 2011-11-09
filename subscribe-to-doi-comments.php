@@ -2,7 +2,7 @@
   /*
    Plugin Name: Subscribe To "Double-Opt-In" Comments
    Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-   Version: 6.0.6
+   Version: 6.0.7
    Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
    Author: Tobias Koelligan
    Author URI: http://www.sjmp.de/
@@ -677,6 +677,9 @@
       
       function remove_subscriptions($postids) {
           global $wpdb;
+		  if(empty($postids)) {
+			return $removed;
+		  }
           $removed = 0;
 		  foreach ($postids as $pppid) {
 			if ($this->remove_subscriber($this->email, $pppid)) {
