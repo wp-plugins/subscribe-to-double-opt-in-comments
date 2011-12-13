@@ -108,6 +108,10 @@ Use this code (within the loop) in your template file, to change the place of th
 
 Yes, just place this code snippet in your template (outside the comments form): <code><?php show_manual_subscription_form(); ?></code>
 
+= I use Hosteurope and I cannot send e-mails via this plugin =
+
+See this comment for a solution: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/comment-page-10/#comment-4460
+
 == Screenshots ==
 
 1. Part of the settings menu
