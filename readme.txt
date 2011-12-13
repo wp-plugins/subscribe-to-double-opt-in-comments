@@ -10,6 +10,10 @@ Based on the well known Subscribe-to-Comments PlugIn, but now with double-opt-in
 
 == Changelog ==
 
+= 6.0.7 =
+* added 3.3 support
+* added multisite version, but currently disabled, you have to enable it manually if you like to
+
 = 6.0.6 =
 * fixed some minor bugs
 
