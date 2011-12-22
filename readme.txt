@@ -4,11 +4,14 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: comments, subscribe, double opt in, kommentar, abonnieren, opt in, optin, kommentare, benachrichtigung
 Requires at least: 2.7
 Tested up to: 3.3
-Stable tag: 6.0.8
+Stable tag: 6.0.9
 
 Based on the well known Subscribe-to-Comments PlugIn, but now with double-opt-in feature to prevent spam.
 
 == Changelog ==
+
+= 6.0.9 =
+* minor bug fixes
 
 = 6.0.8 =
 * added 3.3 support
