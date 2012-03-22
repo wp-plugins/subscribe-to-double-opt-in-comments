@@ -104,12 +104,16 @@ Spanisch (Argentinien), Ukrainisch, Italienisch, Hebr&auml;isch, Arabisch, Portu
 3. Set settings via "Settings" menu in WordPress
 4. Ready, steady, go :)
 
+Questions? Go to <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">this page</a> and leave a comment!
+
 = Deutsch =
 
 1. Dateien ins "/wp-content/plugins" Verzeichnis laden
 2. Im Adminbereich das Plugin aktivieren
 3. Einstellungen anpassen, ebenfalls im Adminbereich!
 4. Fertig, jetzt darf man sich freuen :)
+
+Fragen? Du kannst deine Fragen <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">hier</a> stellen! Einfach einen Kommentar hinterlassen.
 
 == Frequently Asked Questions ==
 
@@ -123,7 +127,7 @@ Yes, just place this code snippet in your template (outside the comments form): 
 
 = I use Hosteurope and I cannot send e-mails via this plugin =
 
-See this comment for a solution: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/comment-page-10/#comment-4460
+See this (german) comment for a solution: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/comment-page-10/#comment-4460
 
 == Screenshots ==
 
