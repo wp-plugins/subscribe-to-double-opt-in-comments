@@ -83,7 +83,7 @@ First, the user will get an e-mail with a confirmation link, after the user has 
 Plugin based on Mark Jaquith "Subscribe to Comments".
 More information on my blog: <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
 
-Language support: English, German, Slovak, Turkish, Danish, Belorussian, Spanish (Argentina), Ukrainian, Italian, Hebrew, Arabic, Portuguese (Brazilian), Lithuanian, Dutch.
+Language support: English, German, Slovak, Turkish, Danish, Belorussian, Spanish (Argentina), Ukrainian, Italian, Hebrew, Arabic, Portuguese (Brazilian), Lithuanian, Dutch, Romanian.
 
 = Deutsch =
 
@@ -93,7 +93,7 @@ Danach erhalten sie erst eine Mail falls ein neuer Kommentar gepostet wurde. So 
 Mehr dazu auch auf meinem Blog: <a href="http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/">sjmp.de</a>.
 
 Sprachunterst&uuml;tzung: Deutsch, Englisch, Slowakisch, T&uuml;rkisch, D&auml;nisch, Wei&szlig;russisch, 
-Spanisch (Argentinien), Ukrainisch, Italienisch, Hebr&auml;isch, Arabisch, Portugiesisch (Brasilien), Litauisch, Niederl&auml;ndisch.
+Spanisch (Argentinien), Ukrainisch, Italienisch, Hebr&auml;isch, Arabisch, Portugiesisch (Brasilien), Litauisch, Niederl&auml;ndisch, Rum&auml;nisch.
 
 == Installation ==
 
@@ -127,4 +127,5 @@ See this comment for a solution: http://www.sjmp.de/internet/subscribe-to-commen
 
 == Screenshots ==
 
-1. Part of the settings menu
+1. Part of the settings menu.
+2. The checkbox to subscribe to a comment thread.
