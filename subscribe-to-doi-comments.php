@@ -2,7 +2,7 @@
   /*
    Plugin Name: Subscribe To "Double-Opt-In" Comments
    Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-   Version: 6.1.4
+   Version: 6.1.5
    Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
    Author: Tobias Koelligan
    Author URI: http://www.sjmp.de/
@@ -592,7 +592,12 @@
           // check to make sure this email isn't already in there
           if (!$this->is_blocked($email)) {
               // email hasn't already been added - so add it
-              $blocked = get_settings('do_not_mail') . ' ' . $email;
+			  if (is_array(get_settings('do_not_mail'))) {
+				$blocked = get_settings('do_not_mail');
+				$blocked[] = $email;
+			  } else {
+				$blocked = get_settings('do_not_mail') . ' ' . $email;
+			  }
               update_option('do_not_mail', $blocked);
               return true;
           }
@@ -608,7 +613,11 @@
           
           if ($this->is_blocked($email)) {
               // e-mail is in the list - so remove it
-              $blocked = str_replace(' ' . $email, '', explode(' ', get_settings('do_not_mail')));
+			  if (is_array(get_settings('do_not_mail'))) {
+				$blocked = str_replace($email, '', get_settings('do_not_mail'));
+			  } else {
+				$blocked = str_replace(' ' . $email, '', explode(' ', get_settings('do_not_mail')));
+			  }
               update_option('do_not_mail', $blocked);
               return true;
           }
