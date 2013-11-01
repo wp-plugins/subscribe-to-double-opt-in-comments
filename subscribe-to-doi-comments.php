@@ -2,7 +2,7 @@
   /*
    Plugin Name: Subscribe To "Double-Opt-In" Comments
    Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
-   Version: 6.1.8
+   Version: 6.2.0
    Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
    Author: Tobias Koelligan
    Author URI: http://www.sjmp.de/
@@ -362,13 +362,13 @@
 		  
           $this->db_upgrade_check();
           
-          $this->settings = get_settings('sg_subscribe_settings');
+          $this->settings = get_option('sg_subscribe_settings');
           
           $this->salt = $this->settings['salt'];
           $this->site_email = (is_email($this->settings['email']) && $this->settings['email'] != 'email@example.com') ? $this->settings['email'] : get_bloginfo('admin_email');
           $this->site_name = ($this->settings['name'] != 'YOUR NAME' && !empty($this->settings['name'])) ? $this->settings['name'] : get_bloginfo('name');
-          $this->default_subscribed = ($this->settings['default_subscribed']) ? true : false;
-		  $this->hideCopyright = ($this->settings['hideCopyright']) ? true : false;
+          $this->default_subscribed = isset($this->settings['default_subscribed']) && $this->settings['default_subscribed'] ? true : false;
+		  $this->hideCopyright = (isset($this->settings['hideCopyright']) && $this->settings['hideCopyright']) ? true : false;
           
 		  if (empty($this->settings['not_subscribed_text'])) {
 			$this->not_subscribed_text = __('Notify me of followup comments via e-mail', 'subscribe-to-doi-comments');
@@ -901,7 +901,7 @@
 				  }
 			  }
               
-              if ($update)
+              if (isset($update) && $update)
                   $this->update_settings($settings);
               
               $column_name = 'comment_subscribe_optin';
@@ -984,9 +984,9 @@
           
           
           function add_admin_menu() {
-              add_management_page(__('Comment Subscription Manager', 'subscribe-to-doi-comments'), __('Subscriptions', 'subscribe-to-doi-comments'), 8, 'stc-management', 'sg_subscribe_admin');
+              add_management_page(__('Comment Subscription Manager', 'subscribe-to-doi-comments'), __('Subscriptions', 'subscribe-to-doi-comments'), 'manage_options', 'stc-management', 'sg_subscribe_admin');
               
-              add_options_page(__('Subscribe to DOI Comments', 'subscribe-to-doi-comments'), __('Subscribe to DOI Comments', 'subscribe-to-doi-comments'), 5, 'stc-options', array('sg_subscribe_settings', 'options_page'));
+              add_options_page(__('Subscribe to DOI Comments', 'subscribe-to-doi-comments'), __('Subscribe to DOI Comments', 'subscribe-to-doi-comments'), 'manage_options', 'stc-options', array('sg_subscribe_settings', 'options_page'));
           }
       }
       // class sg_subscribe
@@ -1030,7 +1030,7 @@
       
       
       // detect "subscribe without commenting" attempts
-      add_action('init', create_function('$a', 'global $sg_subscribe; if ( $_POST[\'solo-comment-subscribe\'] == \'solo-comment-subscribe\' && is_numeric($_POST[\'postid\']) ) {
+      add_action('init', create_function('$a', 'global $sg_subscribe; if ( isset($_POST[\'solo-comment-subscribe\']) && $_POST[\'solo-comment-subscribe\'] == \'solo-comment-subscribe\' && is_numeric($_POST[\'postid\']) ) {
   sg_subscribe_start();
   $sg_subscribe->solo_subscribe(stripslashes($_POST[\'email\']), (int) $_POST[\'postid\']);
 }'));
