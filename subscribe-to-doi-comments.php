@@ -4,7 +4,7 @@
    Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
    Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
    Author: Tobias Koelligan
-   Version: 6.4.0
+   Version: 6.4.1
    Author URI: http://www.sjmp.de/
    */
   
@@ -419,7 +419,7 @@
       
       
       function show_errors($type = 'manager', $before_all = '<div class="updated updated-error">', $after_all = '</div>', $before_each = '<p>', $after_each = '</p>') {
-          if (is_array($this->errors[$type])) {
+          if (isset($this->errors[$type]) && is_array($this->errors[$type])) {
               echo $before_all;
               foreach ($this->errors[$type] as $error)
                   echo $before_each . $error . $after_each;
