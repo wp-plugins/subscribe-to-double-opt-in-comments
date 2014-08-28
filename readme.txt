@@ -2,15 +2,19 @@
 Contributors: Tobiask
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3736248
 Tags: comments, subscribe, double opt in, kommentar, abonnieren, opt in, optin, kommentare, benachrichtigung
-Requires at least: 3.2
-Tested up to: 3.9
-Stable tag: 6.4.1
+Requires at least: 3.7
+Tested up to: 4.0
+Stable tag: 6.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Based on the well known Subscribe-to-Comments PlugIn, but now with double-opt-in feature to prevent spam.
 
 == Changelog ==
+
+= 6.4.2 =
+* tested with WP 4.0
+* new icon added - Icon made by <a href="http://www.freepik.com">Freepik</a> from <a href="http://www.flaticon.com">www.flaticon.com</a>
 
 = 6.4.1 =
 * fixed warning: illegal string offset
