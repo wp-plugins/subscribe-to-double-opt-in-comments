@@ -4,7 +4,7 @@
    Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
    Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
    Author: Tobias Koelligan
-   Version: 6.4.2
+   Version: 6.4.3
    Author URI: http://www.sjmp.de/
    */
   
@@ -865,30 +865,30 @@
 			  }
               
               $settings = get_option('sg_subscribe_settings');
-              if (!$settings) {
+              if (!isset($settings)) {
                   // work around WP 2.2/2.2.1 bug
                   wp_redirect('http://' . $_SERVER['HTTP_HOST'] . add_query_arg('stcwpbug', '1'));
                   exit;
               }
               
-              if (!$settings['salt']) {
+              if (!isset($settings['salt'])) {
                   // random MD5 hash
                   $settings['salt'] = md5(md5(uniqid(rand() . rand() . rand() . rand() . rand(), true)));
                   $update = true;
               }
               
-              if (!$settings['clear_both']) {
+              if (!isset($settings['clear_both'])) {
                   $settings['clear_both'] = 'clear_both';
                   $update = true;
               }
               
-              if (!$settings['version']) {
+              if (!isset($settings['version'])) {
                   $settings = stripslashes_deep($settings);
                   $update = true;
               }
               
 			  if (!is_multisite()) {
-				  if (!$settings['confirmation_text']) {
+				  if (!isset($settings['confirmation_text'])) {
 					  $settings['confirmation_text'] = __("You will now get an e-mail, if a new comment is posted.");
 					  $update = true;
 				  }
