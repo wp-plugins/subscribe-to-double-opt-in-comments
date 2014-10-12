@@ -4,7 +4,7 @@
    Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
    Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
    Author: Tobias Koelligan
-   Version: 6.4.4
+   Version: 6.4.5
    Author URI: http://www.sjmp.de/
    */
   
@@ -221,7 +221,7 @@
   
 		  $donationlink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3736248';
           
-          echo '<h2>' . __('Subscribe to Comments Options', 'subscribe-to-doi-comments') . '</h2> (by Tobias K. from <a href="http://www.sjmp.de/" target="_blank">sjmp.de</a>, please <a href="'.$donationlink.'" target="_blank">donate</a> if you like the plugin!)';
+          echo '<h2>' . __('Subscribe to Comments Options', 'subscribe-to-doi-comments') . '</h2> (by Tobias from <a href="http://www.sjmp.de/" target="_blank">sjmp.de</a>, please <a rel="nofollow" href="'.$donationlink.'" target="_blank">donate</a> if you like the plugin!)';
           echo '<ul>';
           
           echo '<li><label for="name">' . __('"From" name for notifications:', 'subscribe-to-doi-comments') . ' <input type="text" size="40" id="name" name="sg_subscribe_settings[name]" value="' . sg_subscribe_settings::form_setting('name') . '" /></label></li>';
@@ -272,7 +272,7 @@
           
           echo '<p>' . __('You can hide the copyright notice published on the subscription manager page. This is optional. Please consider a donation via PayPal if you hide the copyright notice!', 'subscribe-to-doi-comments') . '</p>';
 		  echo '<p style="color:darkred;">' . __('Lots of work was and is put into this plugin, so be fair and donate if you hide the copyright notice!', 'subscribe-to-doi-comments');
-		  printf(__(' <a href="%s" target="_blank">Donate here!</a></p>', 'subscribe-to-doi-comments'), $donationlink);
+		  printf(__(' <a href="%s" rel="nofollow" target="_blank">Donate here!</a></p>', 'subscribe-to-doi-comments'), $donationlink);
 
 		  echo '<ul>';
           echo '<li><label for="hideCopyright"><input type="checkbox" id="hideCopyright" name="sg_subscribe_settings[hideCopyright]" value="true"' . sg_subscribe_settings::checkflag('hideCopyright') . ' /> ' . __('Hide the copyright notice from the subscription manager.', 'subscribe-to-doi-comments') . '</label></li>';
@@ -372,8 +372,8 @@
           
 		  if (empty($this->settings['not_subscribed_text'])) {
 			$this->not_subscribed_text = __('Notify me of followup comments via e-mail', 'subscribe-to-doi-comments');
-			$this->subscribed_text = __('You are subscribed to this entry.  <a href="[manager_link]">Manage your subscriptions</a>.', 'subscribe-to-doi-comments');
-			$this->author_text = __('You are the author of this entry.  <a href="[manager_link]">Manage subscriptions</a>.', 'subscribe-to-doi-comments');
+			$this->subscribed_text = __('You are subscribed to this entry.  <a rel="nofollow" href="[manager_link]">Manage your subscriptions</a>.', 'subscribe-to-doi-comments');
+			$this->author_text = __('You are the author of this entry.  <a rel="nofollow" href="[manager_link]">Manage subscriptions</a>.', 'subscribe-to-doi-comments');
 			$this->mail_text = __("Hello,\n\nplease click on the following link:\n[verify_url]\nto confirm your subscription.", 'subscribe-to-doi-comments');
 			$this->mail_text_head =  __('Double Opt In', 'subscribe-to-doi-comments');
 			$this->clear_both = $this->settings['clear_both'];
@@ -811,7 +811,7 @@
               $charset = get_settings('blog_charset');
               
               $headers = "From: \"{$site_name}\" <{$site_email}>\n";
-              $headers .= "MIME-Version: 1.0\n";
+              // $headers .= "MIME-Version: 1.0\n";
               $headers .= "Content-Type: text/plain; charset=\"{$charset}\"\n";
               return wp_mail($to, $subject, strip_tags($message), $headers);
           }
@@ -836,7 +836,7 @@
               $title = get_the_title($postid);
               if (empty($title))
                   $title = __('click here', 'subscribe-to-doi-comments');
-              $output = '<a href="' . $uri . '">' . $title . '</a>';
+              $output = '<a rel="nofollow" href="' . $uri . '">' . $title . '</a>';
               return $output;
           }
           
@@ -861,7 +861,7 @@
 			  if (is_multisite()) {
 				add_option('sg_subscribe_settings', array('use_custom_style' => '', 'email' => get_bloginfo('admin_email'), 'name' => get_bloginfo('name'), 'header' => '[theme_path]/header.php', 'sidebar' => '', 'footer' => '[theme_path]/footer.php', 'before_manager' => '<div id="content" class="widecolumn subscription-manager">', 'after_manager' => '</div>', 'version' => $this->version));
 			  } else {
-				add_option('sg_subscribe_settings', array('use_custom_style' => '', 'email' => get_bloginfo('admin_email'), 'name' => get_bloginfo('name'), 'header' => '[theme_path]/header.php', 'sidebar' => '', 'footer' => '[theme_path]/footer.php', 'before_manager' => '<div id="content" class="widecolumn subscription-manager">', 'after_manager' => '</div>', 'not_subscribed_text' => __('Notify me of followup comments via e-mail', 'subscribe-to-doi-comments'), 'subscribed_text' => __('You are subscribed to this entry.  <a href="[manager_link]">Manage your subscriptions</a>.', 'subscribe-to-doi-comments'), 'author_text' => __('You are the author of this entry.  <a href="[manager_link]">Manage subscriptions</a>.', 'subscribe-to-doi-comments'), 'mail_text' => __("Hello,\n\nplease click on the following link:\n[verify_url]\nto confirm your subscription.", 'subscribe-to-doi-comments'), 'mail_text_head' => __('Double Opt In', 'subscribe-to-doi-comments'), 'version' => $this->version));
+				add_option('sg_subscribe_settings', array('use_custom_style' => '', 'email' => get_bloginfo('admin_email'), 'name' => get_bloginfo('name'), 'header' => '[theme_path]/header.php', 'sidebar' => '', 'footer' => '[theme_path]/footer.php', 'before_manager' => '<div id="content" class="widecolumn subscription-manager">', 'after_manager' => '</div>', 'not_subscribed_text' => __('Notify me of followup comments via e-mail', 'subscribe-to-doi-comments'), 'subscribed_text' => __('You are subscribed to this entry.  <a rel="nofollow" href="[manager_link]">Manage your subscriptions</a>.', 'subscribe-to-doi-comments'), 'author_text' => __('You are the author of this entry.  <a rel="nofollow" href="[manager_link]">Manage subscriptions</a>.', 'subscribe-to-doi-comments'), 'mail_text' => __("Hello,\n\nplease click on the following link:\n[verify_url]\nto confirm your subscription.", 'subscribe-to-doi-comments'), 'mail_text_head' => __('Double Opt In', 'subscribe-to-doi-comments'), 'version' => $this->version));
 			  }
               
               $settings = get_option('sg_subscribe_settings');
@@ -1110,7 +1110,7 @@
               
           case "block":
               if ($sg_subscribe->add_block($sg_subscribe->email))
-                  $sg_subscribe->add_message(sprintf(__('<strong>%1$s</strong> has been added to the "do not mail" list. You will no longer receive any notifications from this site. If this was done in error, please contact the <a href="mailto:%2$s">site administrator</a> to remove this block.', 'subscribe-to-doi-comments'), $sg_subscribe->email, $sg_subscribe->site_email));
+                  $sg_subscribe->add_message(sprintf(__('<strong>%1$s</strong> has been added to the "do not mail" list. You will no longer receive any notifications from this site. If this was done in error, please contact the <a rel="nofollow" href="mailto:%2$s">site administrator</a> to remove this block.', 'subscribe-to-doi-comments'), $sg_subscribe->email, $sg_subscribe->site_email));
               else
                   $sg_subscribe->add_error(sprintf(__('<strong>%s</strong> has already been blocked!', 'subscribe-to-doi-comments'), $sg_subscribe->email), 'manager');
               $sg_subscribe->key = $sg_subscribe->generate_key($sg_subscribe->email);
@@ -1132,7 +1132,8 @@
   <title><?php
                       printf(__('%s Comment Subscription Manager', 'subscribe-to-doi-comments'), bloginfo('name'));
 ?></title>
-    <meta http-equiv="Content-Type" content="text/html;  charset=<?php
+	<meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Content-Type" content="text/html; charset=<?php
                       bloginfo('charset');
 ?>" />
 
@@ -1273,7 +1274,7 @@ if (!$sg_subscribe->hideCopyright()) {
 
       <p>
       <?php
-                  printf(__('You have indicated that you do not wish to receive any notifications at <strong>%1$s</strong> from this site. If this is incorrect, or if you wish to have the block removed, please contact the <a href="mailto:%2$s">site administrator</a>.', 'subscribe-to-doi-comments'), $sg_subscribe->email, $sg_subscribe->site_email);
+                  printf(__('You have indicated that you do not wish to receive any notifications at <strong>%1$s</strong> from this site. If this is incorrect, or if you wish to have the block removed, please contact the <a rel="nofollow" href="mailto:%2$s">site administrator</a>.', 'subscribe-to-doi-comments'), $sg_subscribe->email, $sg_subscribe->site_email);
 ?>
       </p>
     </fieldset>
@@ -1318,7 +1319,7 @@ if (!$sg_subscribe->hideCopyright()) {
                           if ($_REQUEST['email'])
                               :
 ?>
-        <p><a href="<?php
+        <p><a rel="nofollow" href="<?php
                               echo $sg_subscribe->form_action;
 ?>"><?php
                           _e('&laquo; Back');
@@ -1394,7 +1395,7 @@ if (!$sg_subscribe->hideCopyright()) {
                           if (!$_REQUEST['showallsubscribers'])
                               :
 ?>
-  <p><a href="<?php
+  <p><a rel="nofollow" href="<?php
                               echo esc_attr(add_query_arg('showallsubscribers', '1', $sg_subscribe->form_action));
 ?>"><?php
                           _e('Show all subscribers', 'subscribe-to-doi-comments');
@@ -1403,7 +1404,7 @@ if (!$sg_subscribe->hideCopyright()) {
                           elseif (!$_REQUEST['showccfield'])
                               :
 ?>
-  <p><a href="<?php
+  <p><a rel="nofollow" href="<?php
                               echo add_query_arg('showccfield', '1');
 ?>"><?php
                           _e('Show list of subscribers in <code>CC:</code>-field format (for bulk e-mailing)', 'subscribe-to-doi-comments');
@@ -1412,7 +1413,7 @@ if (!$sg_subscribe->hideCopyright()) {
                           else
                               :
 ?>
-  <p><a href="<?php
+  <p><a rel="nofollow" href="<?php
                               echo esc_attr($sg_subscribe->form_action);
 ?>"><?php
                           _e('&laquo; Back to regular view', 'subscribe-to-doi-comments');
@@ -1429,7 +1430,7 @@ if (!$sg_subscribe->hideCopyright()) {
                                   echo "<ul>\n";
                                   foreach ((array)$all_subscriptions as $email => $ccount) {
                                       $enc_email = urlencode($email);
-                                      echo "<li>($ccount) <a href='" . esc_attr($sg_subscribe->form_action . "&email=$enc_email") . "'>" . wp_specialchars($email) . "</a></li>\n";
+                                      echo "<li>($ccount) <a rel='nofollow' href='" . esc_attr($sg_subscribe->form_action . "&email=$enc_email") . "'>" . wp_specialchars($email) . "</a></li>\n";
                                   }
                                   echo "</ul>\n";
                               }
@@ -1454,7 +1455,7 @@ if (!$sg_subscribe->hideCopyright()) {
                               
                               echo "<ul>\n";
                               foreach ($all_top_posts as $pid => $ccount) {
-                                  echo "<li>($ccount) <a href='" . get_permalink($pid) . "'>" . get_the_title($pid) . "</a></li>\n";
+                                  echo "<li>($ccount) <a rel='nofollow' href='" . get_permalink($pid) . "'>" . get_the_title($pid) . "</a></li>\n";
                               }
                               echo "</ul>";
 ?>
@@ -1531,7 +1532,7 @@ function checkAll(form) {
         </ol>
 
         <p>
-        <a href="javascript:;" onclick="checkAll(document.getElementById('removeSubscription')); return false; "><?php
+        <a rel="nofollow" href="javascript:;" onclick="checkAll(document.getElementById('removeSubscription')); return false; "><?php
                           _e('Invert Checkbox Selection', 'subscribe-to-doi-comments');
 ?></a>
         </p>
