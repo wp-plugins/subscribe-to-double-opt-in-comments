@@ -210,7 +210,7 @@ msgid "Comment:\n"
 msgstr ""
 
 #: subscribe-to-doi-comments.php:758
-msgid "See all comments on this post here:\n"
+msgid "See the comment on this post here:\n"
 msgstr ""
 
 #: subscribe-to-doi-comments.php:761

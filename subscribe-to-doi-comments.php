@@ -4,7 +4,7 @@
    Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
    Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
    Author: Tobias Koelligan
-   Version: 6.4.6
+   Version: 6.4.7
    Author URI: http://www.sjmp.de/
    */
   
@@ -755,8 +755,9 @@
               $message = sprintf(__("There is a new comment on the post \"%s\"", 'subscribe-to-doi-comments') . ". \n%s\n\n", $post->post_title, get_permalink($comment->comment_post_ID));
               $message .= sprintf(__("Author: %s\n", 'subscribe-to-doi-comments'), $comment->comment_author);
               $message .= __("Comment:\n", 'subscribe-to-doi-comments') . $comment->comment_content . "\n\n";
-              $message .= __("See all comments on this post here:\n", 'subscribe-to-doi-comments');
-              $message .= get_permalink($comment->comment_post_ID) . "#comments\n\n";
+              $message .= __("See the comment on this post here:\n", 'subscribe-to-doi-comments');
+              //$message .= get_permalink($comment->comment_post_ID) . "#comments\n\n";
+			  $message .= get_comment_link($comment->comment_ID) . "\n\n";
               //add link to manage comment notifications
               $message .= __("To manage your subscriptions or to block all notifications from this site, click the link below:\n", 'subscribe-to-doi-comments');
               $message .= get_settings('home') . '/?wp-subscription-manager=1&email=[email]&key=[key]';

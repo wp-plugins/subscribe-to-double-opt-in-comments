@@ -6,16 +6,16 @@
 # ----------------------------------
 # Plugin-Author: Tobias Koelligan
 # Copyright by Tobias Koelligan
-# Blog: http://www.tobiaskoelligan.de
+# Blog: http://www.sjmp.de
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/subscribe-to-double-opt-in-"
 "comments\n"
-"POT-Creation-Date: 2013-11-03 16:29:25+00:00\n"
+"POT-Creation-Date: 2013-11-16 16:24:13+00:00\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Tobias K. <mail@sjmp.de>\n"
-"Language-Team: sjmp.de <webmaster@webmaster-eye.de>\n"
+"Last-Translator: Tobias Koelligan <mail@sjmp.de>\n"
+"Language-Team: sjmp.de <mail@sjmp.de>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -252,8 +252,8 @@ msgid "Comment:\n"
 msgstr "Kommentar:\n"
 
 #: subscribe-to-doi-comments.php:758
-msgid "See all comments on this post here:\n"
-msgstr "Schau dir alle Kommentare zu diesem Post an:\n"
+msgid "See the comment on this post here:\n"
+msgstr "Schau dir den Kommentar zu diesem Post an:\n"
 
 #: subscribe-to-doi-comments.php:761
 msgid ""
