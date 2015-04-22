@@ -4,7 +4,7 @@
    Plugin URI: http://www.sjmp.de/internet/subscribe-to-comments-mit-double-opt-in-pruefung/
    Description: Allows readers to receive notifications of new comments that are posted to an entry, with Double-Opt-In Feature.  Based on version 2 of "Subscribe to Comments" from Mark Jaquith (http://txfx.net/).
    Author: Tobias Koelligan
-   Version: 6.4.7
+   Version: 6.4.8
    Author URI: http://www.sjmp.de/
    */
   
@@ -868,7 +868,7 @@
               $settings = get_option('sg_subscribe_settings');
               if (!isset($settings)) {
                   // work around WP 2.2/2.2.1 bug
-                  wp_redirect('http://' . $_SERVER['HTTP_HOST'] . add_query_arg('stcwpbug', '1'));
+                  wp_redirect(esc_url('http://' . $_SERVER['HTTP_HOST'] . add_query_arg('stcwpbug', '1')));
                   exit;
               }
               
@@ -897,7 +897,7 @@
 				  if ($settings['not_subscribed_text'] == '' || $settings['subscribed_text'] == '') {
 					  // recover from WP 2.2/2.2.1 bug
 					  delete_option('sg_subscribe_settings');
-					  wp_redirect('http://' . $_SERVER['HTTP_HOST'] . add_query_arg('stcwpbug', '2'));
+					  wp_redirect(esc_url('http://' . $_SERVER['HTTP_HOST'] . add_query_arg('stcwpbug', '2')));
 					  exit;
 				  }
 			  }
@@ -962,10 +962,10 @@
           function manage_link($email = '', $html = true, $echo = true) {
               $link = get_option('home') . '/?wp-subscription-manager=1';
               if ($email != 'admin') {
-                  $link = add_query_arg('email', urlencode($email), $link);
-                  $link = add_query_arg('key', $this->generate_key($email), $link);
+                  $link = esc_url(add_query_arg('email', urlencode($email), $link));
+                  $link = esc_url(add_query_arg('key', $this->generate_key($email), $link));
               }
-              $link = add_query_arg('ref', rawurlencode('http://' . $_SERVER['HTTP_HOST'] . esc_attr($_SERVER['REQUEST_URI'])), $link);
+              $link = esc_url(add_query_arg('ref', rawurlencode('http://' . $_SERVER['HTTP_HOST'] . esc_attr($_SERVER['REQUEST_URI'])), $link));
               //$link = str_replace('+', '%2B', $link);
               if ($html)
                   $link = htmlentities($link);
@@ -1397,7 +1397,7 @@ if (!$sg_subscribe->hideCopyright()) {
                               :
 ?>
   <p><a rel="nofollow" href="<?php
-                              echo esc_attr(add_query_arg('showallsubscribers', '1', $sg_subscribe->form_action));
+                              echo esc_url(add_query_arg('showallsubscribers', '1', $sg_subscribe->form_action));
 ?>"><?php
                           _e('Show all subscribers', 'subscribe-to-doi-comments');
 ?></a></p>
@@ -1406,7 +1406,7 @@ if (!$sg_subscribe->hideCopyright()) {
                               :
 ?>
   <p><a rel="nofollow" href="<?php
-                              echo add_query_arg('showccfield', '1');
+                              echo esc_url(add_query_arg('showccfield', '1'));
 ?>"><?php
                           _e('Show list of subscribers in <code>CC:</code>-field format (for bulk e-mailing)', 'subscribe-to-doi-comments');
 ?></a></p>
